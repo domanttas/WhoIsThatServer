@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WhoIsThatServer.Storage.Models
+{
+    [Table("ImageElement")]
+    public class DatabaseImageElement
+    {
+        /// <summary>
+        /// Primary key of ImageElement table
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Name of the image
+        /// </summary>
+        public string ImageName { get; set; }
+
+        /// <summary>
+        /// Contents of image stored as byte array
+        /// </summary>
+        public byte[] ImageContent { get; set; }
+
+        /// <summary>
+        /// Name of person related with image
+        /// </summary>
+        public string PersonFirstName { get; set; }
+
+        /// <summary>
+        /// Last name of person related with image
+        /// </summary>
+        public string PersonLastName { get; set; }
+    }
+}
