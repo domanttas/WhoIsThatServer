@@ -22,7 +22,7 @@ namespace WhoIsThatServer.Storage.Context
         /// <summary>
         /// Stores information about database image element
         /// </summary>
-        public virtual DbSet<DatabaseImageElement> DatabaseImageElement { get; set; }
+        public virtual DbSet<DatabaseImageElement> DatabaseImageElements { get; set; }
 
 
     }
