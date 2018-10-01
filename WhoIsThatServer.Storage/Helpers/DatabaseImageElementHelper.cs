@@ -29,6 +29,7 @@ namespace WhoIsThatServer.Storage.Helpers
                 PersonLastName = personLastName
             };
 
+            //Inserts element into DatabaseImageElements
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
             {
                 context.DatabaseImageElements.Add(imageElement);
@@ -38,9 +39,20 @@ namespace WhoIsThatServer.Storage.Helpers
             return imageElement;
         }
 
+        /// <summary>
+        /// Returns list of row objects
+        /// </summary>
+        /// <returns>list of DatabaseImageElement objects</returns>
         public IEnumerable<DatabaseImageElement> GetAllImages()
         {
-            throw new NotImplementedException();
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                //LINQ syntax to select all elements from table
+                var imagesList = context.DatabaseImageElements
+                    .Select(s => s);
+
+                return imagesList.ToList();
+            }
         }
     }
 }
