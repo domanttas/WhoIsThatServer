@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WhoIsThatServer.Storage.Models
 {
-    [Table("ImageElement")]
+    [Table("DatabaseImageElements")]
     public class DatabaseImageElement
     {
         /// <summary>
