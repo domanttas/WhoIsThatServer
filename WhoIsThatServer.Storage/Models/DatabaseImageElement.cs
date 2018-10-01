@@ -20,9 +20,9 @@ namespace WhoIsThatServer.Storage.Models
         public string ImageName { get; set; }
 
         /// <summary>
-        /// Contents of image stored as byte array
+        /// Refernce to image in storage
         /// </summary>
-        public byte[] ImageContent { get; set; }
+        public string ImageContentUri { get; set; }
 
         /// <summary>
         /// Name of person related with image
