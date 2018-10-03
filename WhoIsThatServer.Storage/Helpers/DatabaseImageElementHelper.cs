@@ -18,11 +18,12 @@ namespace WhoIsThatServer.Storage.Helpers
         }
 
         //Inherits documentation from interface
-        public DatabaseImageElement InsertNewImageElement(string imageName, string imageContentUri, string personFirstName, string personLastName)
+        public DatabaseImageElement InsertNewImageElement(int id, string imageName, string imageContentUri, string personFirstName, string personLastName)
         {
             //Creates an element to insert into DB
             var imageElement = new DatabaseImageElement()
             {
+                Id = id,
                 ImageName = imageName,
                 ImageContentUri = imageContentUri,
                 PersonFirstName = personFirstName,

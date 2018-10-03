@@ -2,7 +2,10 @@ namespace WhoIsThatServer.Storage.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+    using WhoIsThatServer.Storage.Controllers;
+    using WhoIsThatServer.Storage.Helpers;
+    using WhoIsThatServer.Storage.Models;
+
     public partial class AddProperty : DbMigration
     {
         public override void Up()
@@ -18,7 +21,6 @@ namespace WhoIsThatServer.Storage.Migrations
                         PersonLastName = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
-            
         }
         
         public override void Down()
