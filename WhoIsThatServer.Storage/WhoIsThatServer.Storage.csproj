@@ -196,6 +196,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Context\DatabaseContext.cs" />
     <Compile Include="Context\DatabaseContextGeneration.cs" />
+    <Compile Include="Controllers\DatabaseImageElementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -203,6 +204,11 @@
     </Compile>
     <Compile Include="Helpers\DatabaseImageElementHelper.cs" />
     <Compile Include="Helpers\IDatabaseImageElementHelper.cs" />
+    <Compile Include="Migrations\201810031230213_AddProperty.cs" />
+    <Compile Include="Migrations\201810031230213_AddProperty.Designer.cs">
+      <DependentUpon>201810031230213_AddProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DatabaseImageElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -292,6 +298,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810031230213_AddProperty.resx">
+      <DependentUpon>201810031230213_AddProperty.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
