@@ -7,7 +7,7 @@ using WhoIsThatServer.Storage.Helpers;
 
 namespace WhoIsThatServer.Storage.Controllers
 {
-    public class AzureBlobController : ApiController
+    public class AzureBlobController : ApiController, IAzureBlobController
     {
         public AzureBlobHelper AzureBlobHelper { get; set; } = new AzureBlobHelper();
 
