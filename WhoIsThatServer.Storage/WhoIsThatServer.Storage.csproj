@@ -198,6 +198,7 @@
     <Compile Include="Context\DatabaseContextGeneration.cs" />
     <Compile Include="Controllers\DatabaseImageElementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IDatabaseImageElementController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

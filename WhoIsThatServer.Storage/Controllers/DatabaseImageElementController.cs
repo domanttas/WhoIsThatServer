@@ -9,7 +9,7 @@ using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Controllers
 {
-    public class DatabaseImageElementController : ApiController
+    public class DatabaseImageElementController : ApiController, IDatabaseImageElementController
     {
         public IDatabaseImageElementHelper DatabaseImageElementHelper { get; set; } = new DatabaseImageElementHelper();
         public DatabaseContextGeneration DatabaseContextGeneration { get; set; } = new DatabaseContextGeneration();
