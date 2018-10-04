@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using WhoIsThatServer.Storage.Controllers;
+using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage
@@ -21,17 +22,21 @@ namespace WhoIsThatServer.Storage
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            //Testing Azure Blob Controller
+            AzureBlobController azureBlobController = new AzureBlobController();
+            string firstTest = azureBlobController.GetImageUri("Domantas_test.jpg");
+
             //Inserting dummy data for controller testing
-            DatabaseImageElement t = new DatabaseImageElement()
+            DatabaseImageElement databaseImageElement = new DatabaseImageElement()
             {
                 Id = 1,
-                ImageName = "test",
-                ImageContentUri = "test",
-                PersonFirstName = "test",
-                PersonLastName = "test"
+                ImageName = "Domantas_test.jpg",
+                ImageContentUri = firstTest,
+                PersonFirstName = "Domantas",
+                PersonLastName = "WorkPls"
             };
             DatabaseImageElementController test = new DatabaseImageElementController();
-            test.Post(t);
+            test.Post(databaseImageElement);
         }
     }
 }
