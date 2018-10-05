@@ -17,6 +17,7 @@ namespace WhoIsThatServer.Storage.Controllers
         }
 
         [HttpGet]
+        [Route("api/blob/get_uri")]
         public string GetImageUri(string imageName)
         {
             return AzureBlobHelper.GetImageUri(imageName);

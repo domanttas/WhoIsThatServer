@@ -15,11 +15,13 @@ namespace WhoIsThatServer.Storage.Controllers
         public DatabaseContextGeneration DatabaseContextGeneration { get; set; } = new DatabaseContextGeneration();
 
         [HttpGet]
+        [Route("api/images/all")]
         public IHttpActionResult GetAllImages()
         {
             return Json(DatabaseImageElementHelper.GetAllImages());
         }
 
+        [Route("api/images/add")]
         public IHttpActionResult Post([FromBody] DatabaseImageElement databaseImageElement)
         {
             using (var context = DatabaseContextGeneration.BuildDatabaseContext())
