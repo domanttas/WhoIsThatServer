@@ -26,6 +26,9 @@ namespace WhoIsThatServer.Storage.Controllers
         {
             using (var context = DatabaseContextGeneration.BuildDatabaseContext())
             {
+                if (context.DatabaseImageElements.Any(s => s.ImageContentUri == databaseImageElement.ImageContentUri))
+                    return Json("Error");
+
                 context.DatabaseImageElements.Add(databaseImageElement);
                 context.SaveChanges();
             }
