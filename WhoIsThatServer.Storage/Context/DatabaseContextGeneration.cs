@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WhoIsThatServer.Storage.Context
 {
-    public class DatabaseContextGeneration
+    public class DatabaseContextGeneration : IDatabaseContextGeneration
     {
         public DatabaseContext BuildDatabaseContext()
         {
