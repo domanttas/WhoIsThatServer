@@ -7,7 +7,7 @@ using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Context
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
         /// <summary>
         /// Generates database called WhoIsThatServer.Storage.DatabaseContext
