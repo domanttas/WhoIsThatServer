@@ -97,5 +97,48 @@ namespace WhoIsThatServer.Storage.UnitTests
             result.PersonFirstName.ShouldBe(expectedPersonFirstName);
             result.PersonLastName.ShouldBe(expectedPersonLastName);
         }
+
+        [Test]
+        public void InsertNewImageElement_ShouldReturnNull()
+        {
+            //Arrange
+            var fakeDatabaseImageElementList = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement()
+                {
+                    Id = 1,
+                    ImageName = "testImageName",
+                    ImageContentUri = "testURI",
+                    PersonFirstName = "testFirstPersonName",
+                    PersonLastName = "testFirstPersonLastName"
+                }
+            };
+            
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeDatabaseImageElementList.AsQueryable());
+            
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDatabaseContext.DatabaseImageElements)
+                .Returns(fakeDbSet);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+            
+            var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
+            
+            //Act
+            var expectedId = 1;
+            var expectedImageName = "testImageName";
+            var expectedImageContentUri = "testURI";
+            var expectedPersonFirstName = "testPersonFirstName";
+            var expectedPersonLastName = "testPersonLastName";
+
+            var result = databaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
+                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+            result.ShouldBe(null);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace WhoIsThatServer.Storage.Helpers
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
             {
                 if (context.DatabaseImageElements.Any(s => s.ImageContentUri == imageElement.ImageContentUri))
-                    return imageElement;
+                    return null;
                 
                 context.DatabaseImageElements.Add(imageElement);
                 context.SaveChanges();
