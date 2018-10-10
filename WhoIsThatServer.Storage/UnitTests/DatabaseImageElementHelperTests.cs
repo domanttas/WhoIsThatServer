@@ -63,8 +63,8 @@ namespace WhoIsThatServer.Storage.UnitTests
         public void InsertNewImageElement_ShouldReturn()
         {
             //Arrange
-            var fakeIQueryable = new List<DatabaseImageElement>().AsQueryable();
-            var fakeDbSet = A.Fake<DbSet<DatabaseImageElement>>();
+            var fakeDatabaseImageElementList = new List<DatabaseImageElement>();
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeDatabaseImageElementList.AsQueryable());
             
             var fakeDatabaseContext = A.Fake<DatabaseContext>();
             A.CallTo(() => fakeDatabaseContext.DatabaseImageElements)
