@@ -9,9 +9,9 @@ namespace WhoIsThatServer.Storage.Helpers
 {
     public class DatabaseImageElementHelper : IDatabaseImageElementHelper
     {
-        private DatabaseContextGeneration _databaseContextGeneration;
+        private IDatabaseContextGeneration _databaseContextGeneration;
 
-        public DatabaseImageElementHelper (DatabaseContextGeneration databaseContextGeneration = null)
+        public DatabaseImageElementHelper (IDatabaseContextGeneration databaseContextGeneration = null)
         {
             //If context is null new context will be created
             _databaseContextGeneration = databaseContextGeneration ?? new DatabaseContextGeneration();
