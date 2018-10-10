@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WhoIsThatServer.Storage.Context;
@@ -56,6 +57,45 @@ namespace WhoIsThatServer.Storage.UnitTests
             //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
             result.ShouldBe(fakeDatabaseImageElementList);
+        }
+
+        [Test]
+        public void InsertNewImageElement_ShouldReturn()
+        {
+            //Arrange
+            var fakeIQueryable = new List<DatabaseImageElement>().AsQueryable();
+            var fakeDbSet = A.Fake<DbSet<DatabaseImageElement>>();
+            
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDatabaseContext.DatabaseImageElements)
+                .Returns(fakeDbSet);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+            
+            var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
+            
+            //Act
+            var expectedId = 1;
+            var expectedImageName = "testImageName";
+            var expectedImageContentUri = "testURI";
+            var expectedPersonFirstName = "testPersonFirstName";
+            var expectedPersonLastName = "testPersonLastName";
+
+            var result = databaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
+                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+            A.CallTo(() => fakeDbSet.Add(result)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeDatabaseContext.SaveChanges()).MustHaveHappenedOnceExactly();
+            
+            result.Id.ShouldBe(expectedId);
+            result.ImageName.ShouldBe(expectedImageName);
+            result.ImageContentUri.ShouldBe(expectedImageContentUri);
+            result.PersonFirstName.ShouldBe(expectedPersonFirstName);
+            result.PersonLastName.ShouldBe(expectedPersonLastName);
         }
     }
 }

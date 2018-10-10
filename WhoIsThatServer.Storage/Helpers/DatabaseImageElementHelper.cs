@@ -33,6 +33,9 @@ namespace WhoIsThatServer.Storage.Helpers
             //Inserts element into DatabaseImageElements
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
             {
+                //if (context.DatabaseImageElements.Any(s => s.ImageContentUri == imageElement.ImageContentUri))
+                    //return null;
+                
                 context.DatabaseImageElements.Add(imageElement);
                 context.SaveChanges();
             }
