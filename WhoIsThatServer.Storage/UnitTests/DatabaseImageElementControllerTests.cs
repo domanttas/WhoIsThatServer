@@ -26,7 +26,7 @@ namespace WhoIsThatServer.Storage.UnitTests
                 new DatabaseImageElement()
                 {
                     Id = 1,
-                    ImageContentUri = "testURI",
+                    ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     ImageName = "testImageName",
                     PersonFirstName = "testFirstName",
                     PersonLastName = "testLastName"
@@ -61,7 +61,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             //Arrange
             var expectedId = 1;
             var expectedImageName = "testImageName";
-            var expectedImageContentUri = "testURI";
+            var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
             var expectedPersonFirstName = "testFirstName";
             var expectedPersonLastName = "testLastName";
 
