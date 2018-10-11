@@ -26,7 +26,10 @@ namespace WhoIsThatServer.Storage.Controllers
         {
             using (var context = DatabaseContextGeneration.BuildDatabaseContext())
             {
-                context.DatabaseImageElements.Add(databaseImageElement);
+                //context.DatabaseImageElements.Add(databaseImageElement);
+                databaseImageElement = DatabaseImageElementHelper.InsertNewImageElement(databaseImageElement.Id,
+                    databaseImageElement.ImageName, databaseImageElement.ImageContentUri,
+                    databaseImageElement.PersonFirstName, databaseImageElement.PersonLastName);
                 context.SaveChanges();
             }
 

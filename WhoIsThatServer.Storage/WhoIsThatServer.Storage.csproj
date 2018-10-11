@@ -264,6 +264,7 @@
     <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Models\DatabaseImageElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
     <Compile Include="UnitTests\UnitTestsUtil.cs" />
   </ItemGroup>
