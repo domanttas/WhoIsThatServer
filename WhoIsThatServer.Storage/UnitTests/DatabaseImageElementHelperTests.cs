@@ -99,7 +99,7 @@ namespace WhoIsThatServer.Storage.UnitTests
         }
 
         [Test]
-        public void InsertNewImageElement_ShouldReturnNull()
+        public void InsertNewImageElement_ShouldReturnNull_SameUri()
         {
             //Arrange
             var fakeDatabaseImageElementList = new List<DatabaseImageElement>()

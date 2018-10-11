@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using WhoIsThatServer.Storage.Context;
 using WhoIsThatServer.Storage.Models;
+using WhoIsThatServer.Storage.Utils;
 
 namespace WhoIsThatServer.Storage.Helpers
 {
@@ -21,6 +22,11 @@ namespace WhoIsThatServer.Storage.Helpers
         public DatabaseImageElement InsertNewImageElement(int id, string imageName, string imageContentUri, string personFirstName, string personLastName)
         {
             if (!Uri.IsWellFormedUriString(imageContentUri, UriKind.Absolute))
+            {
+                return null;
+            }
+
+            if (!imageName.IsFileNameValid())
             {
                 return null;
             }
