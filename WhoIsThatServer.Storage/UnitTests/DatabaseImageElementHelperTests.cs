@@ -24,7 +24,7 @@ namespace WhoIsThatServer.Storage.UnitTests
                 {
                     Id = 1,
                     ImageName = "firstTestName",
-                    ImageContentUri = "firstTestUri",
+                    ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "firstTestPersonName",
                     PersonLastName = "firstTestPersonLastName"
                 },
@@ -33,7 +33,7 @@ namespace WhoIsThatServer.Storage.UnitTests
                 {
                     Id = 2,
                     ImageName = "secondTestName",
-                    ImageContentUri = "secondTestUri",
+                    ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "secondTestPersonName",
                     PersonLastName = "secondTestPersonLastName"
                 }
@@ -79,7 +79,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             //Act
             var expectedId = 1;
             var expectedImageName = "testImageName";
-            var expectedImageContentUri = "testURI";
+            var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
             var expectedPersonFirstName = "testPersonFirstName";
             var expectedPersonLastName = "testPersonLastName";
 
@@ -108,7 +108,7 @@ namespace WhoIsThatServer.Storage.UnitTests
                 {
                     Id = 1,
                     ImageName = "testImageName",
-                    ImageContentUri = "testURI",
+                    ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "testFirstPersonName",
                     PersonLastName = "testFirstPersonLastName"
                 }
@@ -129,7 +129,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             //Act
             var expectedId = 1;
             var expectedImageName = "testImageName";
-            var expectedImageContentUri = "testURI";
+            var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
             var expectedPersonFirstName = "testPersonFirstName";
             var expectedPersonLastName = "testPersonLastName";
 
