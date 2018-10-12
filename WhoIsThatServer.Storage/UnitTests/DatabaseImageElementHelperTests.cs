@@ -142,7 +142,7 @@ namespace WhoIsThatServer.Storage.UnitTests
         }
 
         [Test]
-        public void InsertNewImageElement_ShouldReturnNull_BadFileName()
+        public void InsertNewImageElement_ShouldThrow_BadFileName()
         {
             //Arrange
             var fakeDatabaseImageElementList = new List<DatabaseImageElement>()
@@ -169,18 +169,11 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
-            //Act
-            var expectedId = 1;
-            var expectedImageName = "testImage@@Name";
-            var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
-            var expectedPersonFirstName = "testPersonFirstName";
-            var expectedPersonLastName = "testPersonLastName";
+            //Act and assert
+            Assert.Throws<ArgumentException>(() =>
+                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test"));
 
-            var result = databaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
-                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName);
-            
-            //Assert
-            result.ShouldBe(null);
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
 
         [Test]
