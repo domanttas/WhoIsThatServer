@@ -184,7 +184,7 @@ namespace WhoIsThatServer.Storage.UnitTests
         }
 
         [Test]
-        public void InsertNewImageElement_ShouldReturnNull_BadUri()
+        public void InsertNewImageElement_ShouldThrow_BadUri()
         {
             //Arrange
             var fakeDatabaseImageElementList = new List<DatabaseImageElement>()
@@ -211,18 +211,11 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
-            //Act
-            var expectedId = 1;
-            var expectedImageName = "testImageName";
-            var expectedImageContentUri = "dfkdfjdfjdij";
-            var expectedPersonFirstName = "testPersonFirstName";
-            var expectedPersonLastName = "testPersonLastName";
+            //Act and assert
+            Assert.Throws<UriFormatException>(() =>
+                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test"));
 
-            var result = databaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
-                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName);
-            
-            //Assert
-            result.ShouldBe(null);
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
     }
 }
