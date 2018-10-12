@@ -28,7 +28,7 @@ namespace WhoIsThatServer.Storage.Helpers
 
             if (!imageName.IsFileNameValid())
             {
-                return null;
+                throw new ArgumentException("Filename should be alphanumeric, may include -_.");
             }
             
             //Creates an element to insert into DB
