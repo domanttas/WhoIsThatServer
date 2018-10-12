@@ -23,7 +23,7 @@ namespace WhoIsThatServer.Storage.Helpers
         {
             if (!Uri.IsWellFormedUriString(imageContentUri, UriKind.Absolute))
             {
-                return null;
+                throw new UriFormatException("Invalid URI of image");
             }
 
             if (!imageName.IsFileNameValid())
