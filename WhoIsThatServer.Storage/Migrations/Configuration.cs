@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WhoIsThatServer.Storage.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<WhoIsThatServer.Storage.Context.DatabaseContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Context.DatabaseContext>
     {
         public Configuration()
         {
