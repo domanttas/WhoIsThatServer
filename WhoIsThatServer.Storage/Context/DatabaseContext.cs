@@ -14,7 +14,7 @@ namespace WhoIsThatServer.Storage.Context
         /// Generates Tables according to their names from properties of type DbSet<T>.
         /// Used to access DB information.
         /// </summary>
-        public DatabaseContext() : base("Data Source=whoisthatserverstoragedbserver.database.windows.net;Initial Catalog=who_is_that_server_storage_db;User ID=sqladmin;Password=Vs8rTr3k;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
+        public DatabaseContext() : base("Data Source=teststorageserverdbserver.database.windows.net;Initial Catalog=TestStorageServer_db;User ID=sqladmin;Password=Vs8rTr3k;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
         {
 
         }

@@ -21,22 +21,23 @@ namespace WhoIsThatServer.Storage
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            
             //Testing Azure Blob Controller
             AzureBlobController azureBlobController = new AzureBlobController();
-            string firstTest = azureBlobController.GetImageUri("Domantas_test.jpg");
+            string firstTest = azureBlobController.GetImageUri("Domantas_test_2.jpg");
 
             //Inserting dummy data for controller testing
             DatabaseImageElement databaseImageElement = new DatabaseImageElement()
             {
                 Id = 1,
-                ImageName = "Domantas_test.jpg",
+                ImageName = "Domantas_test_2.jpg",
                 ImageContentUri = firstTest,
                 PersonFirstName = "Domantas",
                 PersonLastName = "WorkPls"
             };
             DatabaseImageElementController test = new DatabaseImageElementController();
             test.Post(databaseImageElement);
+            
         }
     }
 }
