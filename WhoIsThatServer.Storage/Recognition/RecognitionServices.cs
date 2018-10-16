@@ -78,6 +78,8 @@ namespace WhoIsThatServer.Storage.Recognition
             var candidateId = results[0].Candidates[0].PersonId;
             var person = await _faceServiceClient.GetPersonAsync(_groupId, candidateId);
 
+            azureBlobHelper.DeletePhoto("temp");
+
             return person.Name;
         }
     }
