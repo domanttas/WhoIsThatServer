@@ -258,6 +258,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IAzureBlobController.cs" />
     <Compile Include="Controllers\IDatabaseImageElementController.cs" />
+    <Compile Include="Controllers\RecognitionServicesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -270,6 +271,7 @@
     <Compile Include="Models\DatabaseImageElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recognition\RecognitionServices.cs" />
+    <Compile Include="Recognition\Utils\RecUtil.cs" />
     <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
     <Compile Include="UnitTests\RegexTests.cs" />
