@@ -31,5 +31,11 @@ namespace WhoIsThatServer.Storage.Helpers
             AzureBlob.CloudBlockBlob = AzureBlob.CloudBlobContainer.GetBlockBlobReference(imageName);
             return AzureBlob.CloudBlockBlob.Uri.ToString();
         }
+
+        public void DeletePhoto(string name)
+        {
+            var blob = AzureBlob.CloudBlobContainer.GetBlockBlobReference(name);
+            blob.DeleteIfExists();
+        }
     }
 }
