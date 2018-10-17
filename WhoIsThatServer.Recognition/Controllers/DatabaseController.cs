@@ -8,7 +8,7 @@ using WhoIsThatServer.Recognition.Models;
 
 namespace WhoIsThatServer.Recognition.Controllers
 {
-    public class DatabaseController
+    public class DatabaseController : IDatabaseController
     {
         private HttpClient Client { get; set; }
 
@@ -17,10 +17,7 @@ namespace WhoIsThatServer.Recognition.Controllers
             Client = new HttpClient();
         }
 
-        /// <summary>
-        /// Calls ImageObjectElementController in backend and returns list of image objects
-        /// </summary>
-        /// <returns>List of ImageObject instances</returns>
+        ///<inheritdoc/>
         public async Task<List<ImageModel>> GetImageObjects()
         {
             try
