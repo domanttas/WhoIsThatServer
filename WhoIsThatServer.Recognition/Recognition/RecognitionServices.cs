@@ -8,6 +8,7 @@ using WhoIsThatServer.Recognition.Controllers;
 using WhoIsThatServer.Recognition.Recognition.RecUtils;
 using WhoIsThatServer.Recognition.Helpers;
 using System.IO;
+using WhoIsThatServer.Recognition.Models;
 
 namespace WhoIsThatServer.Recognition.Recognition
 {
@@ -102,6 +103,37 @@ namespace WhoIsThatServer.Recognition.Recognition
             azureBlobHelper.DeletePhoto("temp.jpg");
 
             return person.Name;
+        }
+
+        //TODO: checks if inerstion was successful
+
+        /// <summary>
+        /// Inserts new image into person group
+        /// </summary>
+        /// <param name="imageModel">Object to insert into person group</param>
+        /// <returns>boolean</returns>
+        public async Task<bool> InsertPersonInToGroup(ImageModel imageModel)
+        {
+            CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, imageModel.PersonFirstName);
+
+            await _faceServiceClient.AddPersonFaceAsync(_groupId, result.PersonId, RecUtil.GetStreamFromUri(imageModel.ImageContentUri));
+
+            await _faceServiceClient.TrainPersonGroupAsync(_groupId);
+
+            TrainingStatus trainingStatus = null;
+            while (true)
+            {
+                trainingStatus = await _faceServiceClient.GetPersonGroupTrainingStatusAsync(_groupId);
+
+                if (trainingStatus.Status != Status.Running)
+                {
+                    break;
+                }
+
+                await Task.Delay(1000);
+            }
+
+            return true;
         }
     }
 }
