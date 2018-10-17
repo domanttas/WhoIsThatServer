@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using WhoIsThatServer.Storage.Models;
+using WhoIsThatServer.Recognition.Models;
 
-namespace WhoIsThatServer.Storage.Helpers
+namespace WhoIsThatServer.Recognition.Helpers
 {
     public class AzureBlobHelper
     {

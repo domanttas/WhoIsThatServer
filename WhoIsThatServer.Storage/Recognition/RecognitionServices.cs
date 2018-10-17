@@ -18,7 +18,7 @@ namespace WhoIsThatServer.Storage.Recognition
         private const string _recognitionApi = "https://northeurope.api.cognitive.microsoft.com/face/v1.0/";
         private const string _groupId = "People";
 
-        private FaceServiceClient _faceServiceClient;
+        public FaceServiceClient _faceServiceClient;
         private DatabaseImageElementHelper _databaseImageElementHelper;
 
         public RecognitionServices()
