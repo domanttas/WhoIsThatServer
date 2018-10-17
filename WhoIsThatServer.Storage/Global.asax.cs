@@ -15,7 +15,7 @@ namespace WhoIsThatServer.Storage
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        protected async void Application_Start()
+        protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
