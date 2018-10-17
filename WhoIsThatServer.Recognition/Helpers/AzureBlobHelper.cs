@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using WhoIsThatServer.Storage.Models;
+using WhoIsThatServer.Recognition.Models;
 
-namespace WhoIsThatServer.Storage.Helpers
+namespace WhoIsThatServer.Recognition.Helpers
 {
-    public class AzureBlobHelper
+    public class AzureBlobHelper : IAzureBlobHelper
     {
         public AzureBlob AzureBlob;
 
@@ -17,6 +17,7 @@ namespace WhoIsThatServer.Storage.Helpers
             AzureBlob = new AzureBlob();
         }
 
+        ///<inheritdoc/>
         public async void SetPermissionsToPublic()
         {
             BlobContainerPermissions permissions = new BlobContainerPermissions
@@ -26,16 +27,18 @@ namespace WhoIsThatServer.Storage.Helpers
             await AzureBlob.CloudBlobContainer.SetPermissionsAsync(permissions);
         }
 
+        ///<inheritdoc/>
         public string GetImageUri(string imageName)
         {
             AzureBlob.CloudBlockBlob = AzureBlob.CloudBlobContainer.GetBlockBlobReference(imageName);
             return AzureBlob.CloudBlockBlob.Uri.ToString();
         }
 
-        public void DeletePhoto(string name)
+        ///<inheritdoc/>
+        public async void DeletePhoto(string name)
         {
             var blob = AzureBlob.CloudBlobContainer.GetBlockBlobReference(name);
-            blob.DeleteIfExists();
+            await blob.DeleteIfExistsAsync();
         }
     }
 }
