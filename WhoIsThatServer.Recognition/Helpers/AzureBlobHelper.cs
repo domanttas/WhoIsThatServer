@@ -8,7 +8,7 @@ using WhoIsThatServer.Recognition.Models;
 
 namespace WhoIsThatServer.Recognition.Helpers
 {
-    public class AzureBlobHelper
+    public class AzureBlobHelper : IAzureBlobHelper
     {
         public AzureBlob AzureBlob;
 
@@ -17,6 +17,7 @@ namespace WhoIsThatServer.Recognition.Helpers
             AzureBlob = new AzureBlob();
         }
 
+        ///<inheritdoc/>
         public async void SetPermissionsToPublic()
         {
             BlobContainerPermissions permissions = new BlobContainerPermissions
@@ -26,12 +27,14 @@ namespace WhoIsThatServer.Recognition.Helpers
             await AzureBlob.CloudBlobContainer.SetPermissionsAsync(permissions);
         }
 
+        ///<inheritdoc/>
         public string GetImageUri(string imageName)
         {
             AzureBlob.CloudBlockBlob = AzureBlob.CloudBlobContainer.GetBlockBlobReference(imageName);
             return AzureBlob.CloudBlockBlob.Uri.ToString();
         }
 
+        ///<inheritdoc/>
         public async void DeletePhoto(string name)
         {
             var blob = AzureBlob.CloudBlobContainer.GetBlockBlobReference(name);
