@@ -75,6 +75,7 @@ namespace WhoIsThatServer.Recognition.Recognition
         /// <returns>Name of identified person</returns>
         public async Task<string> Identify()
         {
+            //This is needed only for first time, left it for reference
             //var isSuccessful = await CreateGroup();
 
             var azureBlobHelper = new AzureBlobHelper();
