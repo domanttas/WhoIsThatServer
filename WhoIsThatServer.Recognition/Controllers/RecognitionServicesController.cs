@@ -9,10 +9,11 @@ using WhoIsThatServer.Recognition.Recognition;
 namespace WhoIsThatServer.Recognition.Controllers
 {
     [Route("api/[controller]")]
-    public class RecognitionServicesController : Controller
+    public class RecognitionServicesController : Controller, IRecognitionServicesController
     {
         public RecognitionServices RecognitionServices { get; set; } = new RecognitionServices();
 
+        //////<inheritdoc/>
         [HttpGet]
         [Route("identify")]
         public async Task<JsonResult> InitiateRecognition()
