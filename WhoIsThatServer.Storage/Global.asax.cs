@@ -9,12 +9,13 @@ using System.Web.Routing;
 using WhoIsThatServer.Storage.Controllers;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
+using WhoIsThatServer.Storage.Recognition;
 
 namespace WhoIsThatServer.Storage
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        protected void Application_Start()
+        protected async void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -37,7 +38,6 @@ namespace WhoIsThatServer.Storage
             };
             DatabaseImageElementController test = new DatabaseImageElementController();
             test.Post(databaseImageElement);
-            
         }
     }
 }

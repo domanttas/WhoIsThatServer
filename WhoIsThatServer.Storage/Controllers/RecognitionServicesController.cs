@@ -15,7 +15,6 @@ namespace WhoIsThatServer.Storage.Controllers
         [Route("api/recognition")]
         public IHttpActionResult InitiateRecognition()
         {
-            RecognitionServices.CreateGroup();
             return Json(RecognitionServices.Identify());
         }
     }
