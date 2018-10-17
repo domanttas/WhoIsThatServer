@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WhoIsThatServer.Recognition.Models;
 using WhoIsThatServer.Recognition.Recognition;
 
 namespace WhoIsThatServer.Recognition.Controllers
@@ -20,6 +21,14 @@ namespace WhoIsThatServer.Recognition.Controllers
         {
             var temp = await RecognitionServices.Identify();
             return Json(temp);
+        }
+
+        [HttpPost]
+        [Route("insert")]
+        public async Task<JsonResult> Post([FromBody] ImageModel imageModel)
+        {
+            var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
+            return Json(result);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -15,7 +16,7 @@ namespace WhoIsThatServer.Storage
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        protected void Application_Start()
+        protected async void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -25,9 +26,10 @@ namespace WhoIsThatServer.Storage
             
             //Testing Azure Blob Controller
             AzureBlobController azureBlobController = new AzureBlobController();
-            string firstTest = azureBlobController.GetImageUri("Domantas_test_2.jpg");
+            DatabaseImageElementController test = new DatabaseImageElementController();
+            HttpClient client = new HttpClient();
 
-            //Inserting dummy data for controller testing
+            string firstTest = azureBlobController.GetImageUri("Domantas_test_2.jpg");
             DatabaseImageElement databaseImageElement = new DatabaseImageElement()
             {
                 Id = 1,
@@ -36,8 +38,21 @@ namespace WhoIsThatServer.Storage
                 PersonFirstName = "Domantas",
                 PersonLastName = "WorkPls"
             };
-            DatabaseImageElementController test = new DatabaseImageElementController();
             test.Post(databaseImageElement);
+
+            string secondTest = azureBlobController.GetImageUri("Lukas_test.jpg");
+            DatabaseImageElement databaseImageElementSec = new DatabaseImageElement()
+            {
+                Id = 2,
+                ImageName = "Lukas_test.jpg",
+                ImageContentUri = secondTest,
+                PersonFirstName = "Lukas",
+                PersonLastName = "Elenbergas"
+            };
+            test.Post(databaseImageElementSec);
+            //string restUrl = "https://testrecognition.azurewebsites.net/api/recognitionservices/insert";
+            //HttpResponseMessage response = await client.PostAsJsonAsync(
+            //    restUrl, databaseImageElementSec);
         }
     }
 }
