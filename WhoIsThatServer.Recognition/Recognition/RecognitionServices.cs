@@ -26,6 +26,10 @@ namespace WhoIsThatServer.Recognition.Recognition
             _databaseController = new DatabaseController();
         }
 
+        /// <summary>
+        /// Creates person group in Azure face recognition API
+        /// </summary>
+        /// <returns>boolean</returns>
         public async Task<bool> CreateGroup()
         {
             var people = await _databaseController.GetImageObjects();
@@ -65,6 +69,10 @@ namespace WhoIsThatServer.Recognition.Recognition
             return true;
         }
 
+        /// <summary>
+        /// Identifies person from temporary image taken from App
+        /// </summary>
+        /// <returns>Name of identified person</returns>
         public async Task<string> Identify()
         {
             //var isSuccessful = await CreateGroup();

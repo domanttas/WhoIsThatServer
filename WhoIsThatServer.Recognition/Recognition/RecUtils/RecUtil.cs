@@ -9,6 +9,11 @@ namespace WhoIsThatServer.Recognition.Recognition.RecUtils
 {
     public static class RecUtil
     {
+        /// <summary>
+        /// Gets stream of image from URI
+        /// </summary>
+        /// <param name="uri">URI of image in cloud</param>
+        /// <returns>memory stream</returns>
         public static MemoryStream GetStreamFromUri(string uri)
         {
             WebClient webClient = new WebClient();
