@@ -90,6 +90,10 @@ namespace WhoIsThatServer.Recognition.Recognition
             memoryStream = RecUtil.GetStreamFromUri(takenImageUri);
 
             var faces = await _faceServiceClient.DetectAsync(memoryStream);
+
+            if (faces.Length == 0)
+                return "No faces were detected!";
+
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
