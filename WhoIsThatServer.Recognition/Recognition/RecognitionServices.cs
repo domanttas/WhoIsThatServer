@@ -91,14 +91,14 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             var faces = await _faceServiceClient.DetectAsync(memoryStream);
 
-            if (faces.Length == 0)
+            if (faces.Length == 0 || faces == null)
                 return "No faces were detected!";
 
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
-
-            if (results.Length == 0)
+            
+            if (results.Length == 0 || results == null || results[0].Candidates[0] == null)
                 return "No one was indetified!";
 
             var candidateId = results[0].Candidates[0].PersonId;

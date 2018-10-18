@@ -40,11 +40,11 @@ namespace WhoIsThatServer.Storage
             };
             test.Post(databaseImageElement);
 
-            string secondTest = azureBlobController.GetImageUri("Lukas_test.jpg");
+            string secondTest = azureBlobController.GetImageUri("Luktas_test.jpg");
             DatabaseImageElement databaseImageElementSec = new DatabaseImageElement()
             {
                 Id = 2,
-                ImageName = "Lukas_test.jpg",
+                ImageName = "Luktas_test.jpg",
                 ImageContentUri = secondTest,
                 PersonFirstName = "Lukas",
                 PersonLastName = "Elenbergas"
