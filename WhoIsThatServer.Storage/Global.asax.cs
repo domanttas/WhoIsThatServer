@@ -10,7 +10,6 @@ using System.Web.Routing;
 using WhoIsThatServer.Storage.Controllers;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
-using WhoIsThatServer.Storage.Recognition;
 
 namespace WhoIsThatServer.Storage
 {
