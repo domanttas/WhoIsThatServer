@@ -12,7 +12,7 @@ namespace WhoIsThatServer.Storage.Controllers
     public class DatabaseImageElementController : ApiController, IDatabaseImageElementController
     {
         public IDatabaseImageElementHelper DatabaseImageElementHelper { get; set; } = new DatabaseImageElementHelper();
-        public DatabaseContextGeneration DatabaseContextGeneration { get; set; } = new DatabaseContextGeneration();
+        public IDatabaseContextGeneration DatabaseContextGeneration { get; set; } = new DatabaseContextGeneration();
 
         [HttpGet]
         [Route("api/images/all")]
