@@ -98,7 +98,7 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
             
-            if (results.Length == 0 || results == null || results[0].Candidates[0] == null)
+            if (results.Length == 0 || results == null || results[0].Candidates.Length == 0 || results[0].Candidates[0] == null)
                 return "No one was indetified!";
 
             var candidateId = results[0].Candidates[0].PersonId;
