@@ -26,7 +26,7 @@ namespace WhoIsThatServer.Storage.Controllers
         {
             databaseImageElement = DatabaseImageElementHelper.InsertNewImageElement(databaseImageElement.Id,
                 databaseImageElement.ImageName, databaseImageElement.ImageContentUri,
-                databaseImageElement.PersonFirstName, databaseImageElement.PersonLastName);
+                databaseImageElement.PersonFirstName, databaseImageElement.PersonLastName, databaseImageElement.DescriptiveSentence, databaseImageElement.Score);
 
             return Json(databaseImageElement);
         }
