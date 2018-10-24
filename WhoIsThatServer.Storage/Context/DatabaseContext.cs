@@ -24,6 +24,9 @@ namespace WhoIsThatServer.Storage.Context
         /// </summary>
         public virtual DbSet<DatabaseImageElement> DatabaseImageElements { get; set; }
 
-
+        /// <summary>
+        /// Stores information about target and hunter
+        /// </summary>
+        public virtual DbSet<TargetElement> TargetElements { get; set; }
     }
 }
