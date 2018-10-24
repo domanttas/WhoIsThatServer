@@ -17,7 +17,7 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <param name="PersonFirstName">First name</param>
         /// <param name="PersonLastName">Last name</param>
         /// <returns>Inserted object's instance</returns>
-        DatabaseImageElement InsertNewImageElement(int id, string ImageName, string ImageContentUri, string PersonFirstName, string PersonLastName);
+        DatabaseImageElement InsertNewImageElement(int id, string ImageName, string ImageContentUri, string PersonFirstName, string PersonLastName, string descriptiveSentence, int score);
 
         /// <summary>
         /// Gets all images from DB

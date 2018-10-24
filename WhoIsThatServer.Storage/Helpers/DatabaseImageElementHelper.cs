@@ -19,7 +19,7 @@ namespace WhoIsThatServer.Storage.Helpers
         }
 
         //Inherits documentation from interface
-        public DatabaseImageElement InsertNewImageElement(int id, string imageName, string imageContentUri, string personFirstName, string personLastName)
+        public DatabaseImageElement InsertNewImageElement(int id, string imageName, string imageContentUri, string personFirstName, string personLastName, string descriptiveSentence, int score)
         {
             if (!Uri.IsWellFormedUriString(imageContentUri, UriKind.Absolute))
             {
@@ -38,7 +38,9 @@ namespace WhoIsThatServer.Storage.Helpers
                 ImageName = imageName,
                 ImageContentUri = imageContentUri,
                 PersonFirstName = personFirstName,
-                PersonLastName = personLastName
+                PersonLastName = personLastName,
+                DescriptiveSentence = descriptiveSentence,
+                Score = score
             };
 
             //Inserts element into DatabaseImageElements
