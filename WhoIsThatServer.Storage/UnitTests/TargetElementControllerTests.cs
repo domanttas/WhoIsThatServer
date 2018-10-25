@@ -54,5 +54,47 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             jsonContent.ShouldBe(expectedJson);
         }
+
+        [Test]
+        public async Task IsPreyHunted_ShouldCallHelper()
+        {
+            //Arrange
+            var fakeTargetElementHelper = A.Fake<ITargetElementHelper>();
+
+            var expectedId = 1;
+            var expectedHunterPersonId = 5;
+            var expectedPreyPersonId = 6;
+            var expectedIsHunted = false;
+
+            var expectedTargetElement = new TargetElement()
+            {
+                Id = expectedId,
+                HunterPersonId = expectedHunterPersonId,
+                PreyPersonId = expectedPreyPersonId
+            };
+
+            A.CallTo(() => fakeTargetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId))
+                .Returns(false);
+            
+            var targetElementController = new TargetElementController()
+            {
+                TargetElementHelper = fakeTargetElementHelper,
+                Request = new HttpRequestMessage()
+            };
+            
+            //Act
+            var result = targetElementController.IsPreyHunted(expectedTargetElement);
+            
+            //Assert
+            A.CallTo(() => fakeTargetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId))
+                .MustHaveHappenedOnceExactly();
+            
+            var httpResponse = await result.ExecuteAsync(new CancellationToken());
+            var jsonContent = await httpResponse.Content.ReadAsStringAsync();
+
+            var expectedJson = JsonConvert.SerializeObject(false);
+            
+            jsonContent.ShouldBe(expectedJson);
+        }
     }
 }

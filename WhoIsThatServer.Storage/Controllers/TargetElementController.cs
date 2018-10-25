@@ -17,7 +17,7 @@ namespace WhoIsThatServer.Storage.Controllers
         /// <inheritdoc/>
         [HttpDelete]
         [Route("api/game/remove")]
-        public IHttpActionResult IsPreyHunter([FromBody] TargetElement targetElement)
+        public IHttpActionResult IsPreyHunted([FromBody] TargetElement targetElement)
         {
             return Json(TargetElementHelper.IsPreyHunted(targetElement.HunterPersonId, targetElement.PreyPersonId));
         }
