@@ -56,5 +56,46 @@ namespace WhoIsThatServer.Storage.UnitTests
             result.PreyPersonId.ShouldBe(expectedPreyPersonId);
             result.IsHunted.ShouldBe(expectedIsHunter);
         }
+
+        [Test]
+        public void IsPreyHunted_ShouldReturnTrue()
+        {
+            var elementToRemove = new TargetElement()
+            {
+                Id = 1,
+                HunterPersonId = 100,
+                PreyPersonId = 101,
+                IsHunted = false
+            };
+            //Arrange
+            var fakeTargetsList = new List<TargetElement>()
+            {
+                elementToRemove
+            };
+            
+            var fakeDbSetTargetElements = UnitTestsUtil.SetupFakeDbSet(fakeTargetsList.AsQueryable());
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDatabaseContext.TargetElements).Returns(fakeDbSetTargetElements);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration);
+
+            var expectedHunterPersonId = 100;
+            var expectedPreyPersonId = 101;
+            
+            //Act
+            var result = targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+            A.CallTo(() => fakeDbSetTargetElements.Remove(elementToRemove)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeDatabaseContext.SaveChanges()).MustHaveHappenedOnceExactly();
+            
+            result.ShouldBe(true);
+        }
     }
 }
