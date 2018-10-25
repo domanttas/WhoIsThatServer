@@ -29,7 +29,9 @@ namespace WhoIsThatServer.Storage.UnitTests
                     ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     ImageName = "testImageName",
                     PersonFirstName = "testFirstName",
-                    PersonLastName = "testLastName"
+                    PersonLastName = "testLastName",
+                    DescriptiveSentence = "t1",
+                    Score = 1
                 }
             };
 
@@ -64,6 +66,8 @@ namespace WhoIsThatServer.Storage.UnitTests
             var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
             var expectedPersonFirstName = "testFirstName";
             var expectedPersonLastName = "testLastName";
+            var expectedDescriptiveSentence = "t1";
+            var expectedScore = 1;
 
             var expectedDatabaseImageElement = new DatabaseImageElement()
             {
@@ -71,13 +75,15 @@ namespace WhoIsThatServer.Storage.UnitTests
                 ImageContentUri = expectedImageContentUri,
                 ImageName = expectedImageName,
                 PersonFirstName = expectedPersonFirstName,
-                PersonLastName = expectedPersonLastName
+                PersonLastName = expectedPersonLastName,
+                DescriptiveSentence = expectedDescriptiveSentence,
+                Score = expectedScore
             };
             
             var fakeDatabaseImageElementHelper = A.Fake<IDatabaseImageElementHelper>();
 
             A.CallTo(() => fakeDatabaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
-                    expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName))
+                    expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName, expectedDescriptiveSentence, expectedScore))
                 .Returns(expectedDatabaseImageElement);
             
             var databaseImageElementController = new DatabaseImageElementController()
@@ -91,7 +97,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Assert
             A.CallTo(() => fakeDatabaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
-                    expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName))
+                    expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName, expectedDescriptiveSentence, expectedScore))
                 .MustHaveHappenedOnceExactly();
             
             var httpResponse = await result.ExecuteAsync(new CancellationToken());

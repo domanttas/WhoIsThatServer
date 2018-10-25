@@ -31,22 +31,24 @@ namespace WhoIsThatServer.Storage
             string firstTest = azureBlobController.GetImageUri("Domantas_test_2.jpg");
             DatabaseImageElement databaseImageElement = new DatabaseImageElement()
             {
-                Id = 1,
                 ImageName = "Domantas_test_2.jpg",
                 ImageContentUri = firstTest,
                 PersonFirstName = "Domantas",
-                PersonLastName = "WorkPls"
+                PersonLastName = "WorkPls",
+                DescriptiveSentence = "Very descriptive sentence",
+                Score = 199
             };
             test.Post(databaseImageElement);
 
             string secondTest = azureBlobController.GetImageUri("Luktas_test.jpg");
             DatabaseImageElement databaseImageElementSec = new DatabaseImageElement()
             {
-                Id = 2,
                 ImageName = "Luktas_test.jpg",
                 ImageContentUri = secondTest,
                 PersonFirstName = "Lukas",
-                PersonLastName = "Elenbergas"
+                PersonLastName = "Elenbergas",
+                DescriptiveSentence = "Something bad",
+                Score = 0
             };
             test.Post(databaseImageElementSec);
             //string restUrl = "https://testrecognition.azurewebsites.net/api/recognitionservices/insert";

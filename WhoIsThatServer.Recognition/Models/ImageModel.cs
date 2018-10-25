@@ -31,5 +31,15 @@ namespace WhoIsThatServer.Recognition.Models
         /// Last name of person related with image
         /// </summary>
         public string PersonLastName { get; set; }
+
+        /// <summary>
+        /// Sentence which describes person
+        /// </summary>
+        public string DescriptiveSentence { get; set; }
+
+        /// <summary>
+        /// Score of person
+        /// </summary>
+        public int Score { get; set; }
     }
 }

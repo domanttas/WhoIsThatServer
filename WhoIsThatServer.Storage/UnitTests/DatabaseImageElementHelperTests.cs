@@ -26,7 +26,9 @@ namespace WhoIsThatServer.Storage.UnitTests
                     ImageName = "firstTestName",
                     ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "firstTestPersonName",
-                    PersonLastName = "firstTestPersonLastName"
+                    PersonLastName = "firstTestPersonLastName",
+                    DescriptiveSentence = "t1",
+                    Score = 1
                 },
 
                 new DatabaseImageElement
@@ -35,7 +37,9 @@ namespace WhoIsThatServer.Storage.UnitTests
                     ImageName = "secondTestName",
                     ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "secondTestPersonName",
-                    PersonLastName = "secondTestPersonLastName"
+                    PersonLastName = "secondTestPersonLastName",
+                    DescriptiveSentence = "t2",
+                    Score = 1
                 }
             };
 
@@ -82,9 +86,11 @@ namespace WhoIsThatServer.Storage.UnitTests
             var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
             var expectedPersonFirstName = "testPersonFirstName";
             var expectedPersonLastName = "testPersonLastName";
+            var expectedDescriptiveSentence = "t";
+            var expectedScore = 1;
 
             var result = databaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
-                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName);
+                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName, expectedDescriptiveSentence, expectedScore);
             
             //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
@@ -96,6 +102,8 @@ namespace WhoIsThatServer.Storage.UnitTests
             result.ImageContentUri.ShouldBe(expectedImageContentUri);
             result.PersonFirstName.ShouldBe(expectedPersonFirstName);
             result.PersonLastName.ShouldBe(expectedPersonLastName);
+            result.DescriptiveSentence.ShouldBe(expectedDescriptiveSentence);
+            result.Score.ShouldBe(expectedScore);
         }
 
         [Test]
@@ -110,7 +118,9 @@ namespace WhoIsThatServer.Storage.UnitTests
                     ImageName = "testImageName",
                     ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "testFirstPersonName",
-                    PersonLastName = "testFirstPersonLastName"
+                    PersonLastName = "testFirstPersonLastName",
+                    DescriptiveSentence = "t1",
+                    Score = 1
                 }
             };
             
@@ -132,9 +142,11 @@ namespace WhoIsThatServer.Storage.UnitTests
             var expectedImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg";
             var expectedPersonFirstName = "testPersonFirstName";
             var expectedPersonLastName = "testPersonLastName";
+            var expectedDescriptiveSentence = "t1";
+            var exptectedScore = 1;
 
             var result = databaseImageElementHelper.InsertNewImageElement(expectedId, expectedImageName,
-                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName);
+                expectedImageContentUri, expectedPersonFirstName, expectedPersonLastName, expectedDescriptiveSentence, exptectedScore);
             
             //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
@@ -153,7 +165,9 @@ namespace WhoIsThatServer.Storage.UnitTests
                     ImageName = "testImageName",
                     ImageContentUri = "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg",
                     PersonFirstName = "testFirstPersonName",
-                    PersonLastName = "testFirstPersonLastName"
+                    PersonLastName = "testFirstPersonLastName",
+                    DescriptiveSentence = "t1",
+                    Score = 1
                 }
             };
             
@@ -171,7 +185,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Act and assert
             Assert.Throws<ArgumentException>(() =>
-                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test"));
+                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test", "t1", 1));
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
@@ -188,7 +202,9 @@ namespace WhoIsThatServer.Storage.UnitTests
                     ImageName = "testImageName",
                     ImageContentUri = "https://whoisthatserverimages.blob.core.windows.net/images/Domantas_test.jpg",
                     PersonFirstName = "testFirstPersonName",
-                    PersonLastName = "testFirstPersonLastName"
+                    PersonLastName = "testFirstPersonLastName",
+                    DescriptiveSentence = "t1",
+                    Score = 1
                 }
             };
             
@@ -206,7 +222,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Act and assert
             Assert.Throws<UriFormatException>(() =>
-                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test"));
+                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test", "t1", 1));
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }

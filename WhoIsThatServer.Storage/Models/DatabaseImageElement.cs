@@ -33,5 +33,15 @@ namespace WhoIsThatServer.Storage.Models
         /// Last name of person related with image
         /// </summary>
         public string PersonLastName { get; set; }
+
+        /// <summary>
+        /// Sentence which describes user
+        /// </summary>
+        public string DescriptiveSentence { get; set; }
+
+        /// <summary>
+        /// Score of user
+        /// </summary>
+        public int Score { get; set; }
     }
 }
