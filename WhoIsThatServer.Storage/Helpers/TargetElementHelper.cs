@@ -42,7 +42,30 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <inheritdoc/>
         public bool IsPreyHunted(int hunterPersonId, int preyPersonId)
         {
-            throw new NotImplementedException();
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                try
+                {
+                    var tempElement = context.TargetElements.Where(c => c.HunterPersonId == hunterPersonId && c.PreyPersonId == preyPersonId).FirstOrDefault();
+
+                    if (tempElement != null)
+                    {
+                        var elementToDelete = context.TargetElements.Where(c => c.Id == tempElement.Id).FirstOrDefault();
+
+                        context.TargetElements.Remove(elementToDelete);
+                        context.SaveChanges();
+
+                        return true;
+                    }
+                }
+
+                catch(ArgumentNullException ex)
+                {
+                    return false;
+                }
+
+                return false;
+            }
         }
     }
 }
