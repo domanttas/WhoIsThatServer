@@ -22,6 +22,6 @@ namespace WhoIsThatServer.Storage.Controllers
         /// </summary>
         /// <param name="databaseImageElement">Element to insert</param>
         /// <returns>Json of inserted element</returns>
-        IHttpActionResult Post([FromBody] DatabaseImageElement databaseImageElement);
+        IHttpActionResult Post(DatabaseImageElement databaseImageElement);
     }
 }

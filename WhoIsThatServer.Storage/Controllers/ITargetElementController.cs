@@ -22,6 +22,6 @@ namespace WhoIsThatServer.Storage.Controllers
         /// </summary>
         /// <param name="targetElement">Object with ids</param>
         /// <returns>Boolean as Json</returns>
-        IHttpActionResult IsPreyHunted([FromBody] TargetElement targetElement);
+        IHttpActionResult IsPreyHunted(TargetElement targetElement);
     }
 }
