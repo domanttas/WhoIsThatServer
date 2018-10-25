@@ -46,11 +46,11 @@ namespace WhoIsThatServer.Storage.Helpers
             {
                 try
                 {
-                    var tempElement = context.TargetElements.Where(c => c.HunterPersonId == hunterPersonId && c.PreyPersonId == preyPersonId).FirstOrDefault();
+                    var tempElement = context.TargetElements.Where(c => c.HunterPersonId == hunterPersonId && c.PreyPersonId == preyPersonId).SingleOrDefault();
 
                     if (tempElement != null)
                     {
-                        var elementToDelete = context.TargetElements.Where(c => c.Id == tempElement.Id).FirstOrDefault();
+                        var elementToDelete = context.TargetElements.Where(c => c.Id == tempElement.Id).SingleOrDefault();
 
                         context.TargetElements.Remove(elementToDelete);
                         context.SaveChanges();
