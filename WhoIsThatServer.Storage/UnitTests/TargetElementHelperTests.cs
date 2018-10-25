@@ -97,5 +97,43 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             result.ShouldBe(true);
         }
+
+        [Test]
+        public void IsPreyHunter_WrongPreyGoodHunter_ShouldReturnFalse()
+        {
+            //Arrange
+            var fakeTargetsList = new List<TargetElement>()
+            {
+                new TargetElement
+                {
+                    Id = 1,
+                    HunterPersonId = 56,
+                    PreyPersonId = 57,
+                    IsHunted = true
+                }
+            };
+            
+            var fakeDbSetTargetElements = UnitTestsUtil.SetupFakeDbSet(fakeTargetsList.AsQueryable());
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDatabaseContext.TargetElements).Returns(fakeDbSetTargetElements);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration);
+
+            var expectedHunterPersonId = 56;
+            var expectedPreyPersonId = 102;
+            
+            //Act
+            var result = targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+            
+            result.ShouldBe(false);
+        }
     }
 }
