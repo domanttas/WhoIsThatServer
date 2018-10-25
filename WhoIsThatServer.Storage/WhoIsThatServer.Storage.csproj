@@ -277,6 +277,7 @@
     <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
     <Compile Include="UnitTests\RegexTests.cs" />
+    <Compile Include="UnitTests\TargetElementControllerTests.cs" />
     <Compile Include="UnitTests\TargetElementHelperTests.cs" />
     <Compile Include="UnitTests\UnitTestsUtil.cs" />
     <Compile Include="Utils\FileNameValidation.cs" />
