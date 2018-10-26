@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebGrease.Css;
 using WhoIsThatServer.Storage.Context;
 using WhoIsThatServer.Storage.Models;
 using WhoIsThatServer.Storage.Utils;
@@ -69,6 +70,27 @@ namespace WhoIsThatServer.Storage.Helpers
                     .Select(s => s);
 
                 return imagesList.ToList();
+            }
+        }
+
+        public DatabaseImageElement UpdateScore(int id)
+        {
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                var elementToUpdate = context.DatabaseImageElements.Where(c => c.Id == id).SingleOrDefault();
+
+                if (elementToUpdate == null)
+                {
+                    return null;
+                }
+
+                else
+                {
+                    elementToUpdate.Score++;
+                    context.SaveChanges();
+
+                    return elementToUpdate;
+                }
             }
         }
     }
