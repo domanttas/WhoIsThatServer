@@ -16,7 +16,7 @@ namespace WhoIsThatServer.Recognition.Recognition
     {
         private const string _subscriptionKey = "b7923707fb7f44d091bb8d86d47a2988";
         private const string _recognitionApi = "https://northeurope.api.cognitive.microsoft.com/face/v1.0/";
-        private const string _groupId = "people";
+        private const string _groupId = "game";
 
         private FaceServiceClient _faceServiceClient;
         private DatabaseController _databaseController;
@@ -37,7 +37,7 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             try
             {
-                await _faceServiceClient.CreatePersonGroupAsync(_groupId, "friends");
+                await _faceServiceClient.CreatePersonGroupAsync(_groupId, "fun");
             }
 
             catch (Exception exception)
@@ -47,7 +47,7 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             foreach (var person in people)
             {
-                CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, person.PersonFirstName);
+                CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, person.Id.ToString());
 
                 await _faceServiceClient.AddPersonFaceAsync(_groupId, result.PersonId, RecUtil.GetStreamFromUri(person.ImageContentUri));
             }
@@ -118,7 +118,7 @@ namespace WhoIsThatServer.Recognition.Recognition
         /// <returns>boolean</returns>
         public async Task<bool> InsertPersonInToGroup(ImageModel imageModel)
         {
-            CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, imageModel.PersonFirstName);
+            CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, imageModel.Id.ToString());
 
             await _faceServiceClient.AddPersonFaceAsync(_groupId, result.PersonId, RecUtil.GetStreamFromUri(imageModel.ImageContentUri));
 
