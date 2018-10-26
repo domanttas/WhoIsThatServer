@@ -24,5 +24,12 @@ namespace WhoIsThatServer.Storage.Helpers
         /// </summary>
         /// <returns>Returns list of images from DB</returns>
         IEnumerable<DatabaseImageElement> GetAllImages();
+    
+        /// <summary>
+        /// Updates score
+        /// </summary>
+        /// <param name="id">ID of user</param>
+        /// <returns>Updated element</returns>
+        DatabaseImageElement UpdateScore(int id);
     }
 }

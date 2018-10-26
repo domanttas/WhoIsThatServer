@@ -107,5 +107,47 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             jsonContent.ShouldBe(expectedJson);
         }
+
+        [Test]
+        public async Task UpdateScore_ShouldCallHelper()
+        {
+            //Arrange
+            var expectedScore = 1;
+            
+            var expectedElement = new DatabaseImageElement()
+            {
+                Id = 1,
+                DescriptiveSentence = "t",
+                ImageContentUri = "t",
+                ImageName = "t",
+                PersonFirstName = "t",
+                PersonLastName = "t",
+                Score = 0
+            };
+
+            var fakeDatabaseImageElementHelper = A.Fake<IDatabaseImageElementHelper>();
+
+            A.CallTo(() => fakeDatabaseImageElementHelper.UpdateScore(expectedElement.Id)).Returns(expectedElement);
+            
+            var databaseImageElementController = new DatabaseImageElementController()
+            {
+                DatabaseImageElementHelper = fakeDatabaseImageElementHelper,
+                Request = new HttpRequestMessage()
+            };
+            
+            //Act
+            var result = databaseImageElementController.UpdateScore(expectedElement);
+            
+            //Assert
+            A.CallTo(() => fakeDatabaseImageElementHelper.UpdateScore(expectedElement.Id))
+                .MustHaveHappenedOnceExactly();
+            
+            var httpResponse = await result.ExecuteAsync(new CancellationToken());
+            var jsonContent = await httpResponse.Content.ReadAsStringAsync();
+            
+            var expectedJson = JsonConvert.SerializeObject(expectedElement);
+            
+            jsonContent.ShouldBe(expectedJson);
+        }
     }
 }

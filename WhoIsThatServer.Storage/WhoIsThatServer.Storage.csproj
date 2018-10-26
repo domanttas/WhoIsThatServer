@@ -258,6 +258,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IAzureBlobController.cs" />
     <Compile Include="Controllers\IDatabaseImageElementController.cs" />
+    <Compile Include="Controllers\ITargetElementController.cs" />
+    <Compile Include="Controllers\TargetElementController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -265,6 +267,8 @@
     <Compile Include="Helpers\AzureBlobHelper.cs" />
     <Compile Include="Helpers\DatabaseImageElementHelper.cs" />
     <Compile Include="Helpers\IDatabaseImageElementHelper.cs" />
+    <Compile Include="Helpers\ITargetElementHelper.cs" />
+    <Compile Include="Helpers\TargetElementHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Models\DatabaseImageElement.cs" />
@@ -273,6 +277,8 @@
     <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
     <Compile Include="UnitTests\RegexTests.cs" />
+    <Compile Include="UnitTests\TargetElementControllerTests.cs" />
+    <Compile Include="UnitTests\TargetElementHelperTests.cs" />
     <Compile Include="UnitTests\UnitTestsUtil.cs" />
     <Compile Include="Utils\FileNameValidation.cs" />
   </ItemGroup>

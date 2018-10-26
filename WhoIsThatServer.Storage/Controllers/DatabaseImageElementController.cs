@@ -14,6 +14,7 @@ namespace WhoIsThatServer.Storage.Controllers
         public IDatabaseImageElementHelper DatabaseImageElementHelper { get; set; } = new DatabaseImageElementHelper();
         public IDatabaseContextGeneration DatabaseContextGeneration { get; set; } = new DatabaseContextGeneration();
 
+        /// <inheritdoc/>
         [HttpGet]
         [Route("api/images/all")]
         public IHttpActionResult GetAllImages()
@@ -21,6 +22,8 @@ namespace WhoIsThatServer.Storage.Controllers
             return Json(DatabaseImageElementHelper.GetAllImages());
         }
 
+        /// <inheritdoc/>
+        [HttpPost]
         [Route("api/images/add")]
         public IHttpActionResult Post([FromBody] DatabaseImageElement databaseImageElement)
         {
@@ -29,6 +32,14 @@ namespace WhoIsThatServer.Storage.Controllers
                 databaseImageElement.PersonFirstName, databaseImageElement.PersonLastName, databaseImageElement.DescriptiveSentence, databaseImageElement.Score);
 
             return Json(databaseImageElement);
+        }
+
+        /// <inheritdoc/>
+        [HttpPut]
+        [Route("api/images/score")]
+        public IHttpActionResult UpdateScore([FromBody] DatabaseImageElement databaseImageElement)
+        {
+            return Json(DatabaseImageElementHelper.UpdateScore(databaseImageElement.Id));
         }
     }
 }
