@@ -23,5 +23,12 @@ namespace WhoIsThatServer.Storage.Controllers
         /// <param name="databaseImageElement">Element to insert</param>
         /// <returns>Json of inserted element</returns>
         IHttpActionResult Post(DatabaseImageElement databaseImageElement);
+        
+        /// <summary>
+        /// Updates user's score
+        /// </summary>
+        /// <param name="databaseImageElement">Element for which score is updated</param>
+        /// <returns>Updated element</returns>
+        IHttpActionResult UpdateScore(DatabaseImageElement databaseImageElement);
     }
 }
