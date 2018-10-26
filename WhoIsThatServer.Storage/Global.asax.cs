@@ -36,9 +36,12 @@ namespace WhoIsThatServer.Storage
                 PersonFirstName = "Domantas",
                 PersonLastName = "WorkPls",
                 DescriptiveSentence = "Very descriptive sentence",
-                Score = 199
+                Score = 0
             };
             test.Post(databaseImageElement);
+            //string firstRestUrl = "https://testrecognition.azurewebsites.net/api/recognitionservices/insert";
+            //HttpResponseMessage firstResponse = await client.PostAsJsonAsync(
+            //    firstRestUrl, databaseImageElement);
 
             string secondTest = azureBlobController.GetImageUri("Luktas_test.jpg");
             DatabaseImageElement databaseImageElementSec = new DatabaseImageElement()
@@ -54,6 +57,10 @@ namespace WhoIsThatServer.Storage
             //string restUrl = "https://testrecognition.azurewebsites.net/api/recognitionservices/insert";
             //HttpResponseMessage response = await client.PostAsJsonAsync(
             //    restUrl, databaseImageElementSec);
+
+            //string restUrl = "https://testrecognition.azurewebsites.net/api/recognitionservices/create";
+            //HttpResponseMessage response = await client.GetAsync(
+            //    restUrl);
         }
     }
 }

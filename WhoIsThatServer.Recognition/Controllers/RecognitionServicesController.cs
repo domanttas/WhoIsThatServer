@@ -30,5 +30,12 @@ namespace WhoIsThatServer.Recognition.Controllers
             var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
             return Json(result);
         }
+
+        [HttpGet]
+        [Route("create")]
+        public async Task<JsonResult> Create()
+        {
+            return Json(await RecognitionServices.CreateGroup());
+        }
     }
 }
