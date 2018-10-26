@@ -226,5 +226,82 @@ namespace WhoIsThatServer.Storage.UnitTests
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
+
+        [Test]
+        public void UpdateScore_WhenIdExists_ShouldUpdate()
+        {
+            //Arrange
+            var fakeIQueryable = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement
+                {
+                    Id = 0,
+                    DescriptiveSentence = "t",
+                    ImageContentUri = "t",
+                    ImageName = "t",
+                    PersonFirstName = "t",
+                    PersonLastName = "t",
+                    Score = 0
+                }
+            }.AsQueryable();
+
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeIQueryable);
+
+            var fakeDbContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDbContext.DatabaseImageElements).Returns(fakeDbSet);
+
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+
+            var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
+            
+            //Act
+            var expectedResult = 1;
+            var result = databaseImageElementHelper.UpdateScore(fakeIQueryable.ElementAt(0).Id);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
+
+            A.CallTo(() => fakeDbContext.SaveChanges()).MustHaveHappenedOnceExactly();
+            
+            result.Score.ShouldBe(expectedResult);
+        }
+
+        [Test]
+        public void UpdateScore_WhenIdDoesNotExists_ShouldReturnNull()
+        {
+            //Arrange
+            var fakeIQueryable = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement
+                {
+                    Id = 0,
+                    DescriptiveSentence = "t",
+                    ImageContentUri = "t",
+                    ImageName = "t",
+                    PersonFirstName = "t",
+                    PersonLastName = "t",
+                    Score = 0
+                }
+            }.AsQueryable();
+
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeIQueryable);
+
+            var fakeDbContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDbContext.DatabaseImageElements).Returns(fakeDbSet);
+
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+
+            var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
+            
+            //Act
+            var result = databaseImageElementHelper.UpdateScore(9);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
+            
+            result.ShouldBe(null);
+        }
     }
 }
