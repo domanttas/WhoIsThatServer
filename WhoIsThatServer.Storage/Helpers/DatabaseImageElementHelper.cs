@@ -19,7 +19,7 @@ namespace WhoIsThatServer.Storage.Helpers
             _databaseContextGeneration = databaseContextGeneration ?? new DatabaseContextGeneration();
         }
 
-        //Inherits documentation from interface
+        /// <inheritdoc/>
         public DatabaseImageElement InsertNewImageElement(int id, string imageName, string imageContentUri, string personFirstName, string personLastName, string descriptiveSentence, int score)
         {
             if (!Uri.IsWellFormedUriString(imageContentUri, UriKind.Absolute))
@@ -57,10 +57,7 @@ namespace WhoIsThatServer.Storage.Helpers
             return imageElement;
         }
 
-        /// <summary>
-        /// Returns list of row objects
-        /// </summary>
-        /// <returns>list of DatabaseImageElement objects</returns>
+        /// <inheritdoc/>
         public IEnumerable<DatabaseImageElement> GetAllImages()
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
@@ -73,6 +70,7 @@ namespace WhoIsThatServer.Storage.Helpers
             }
         }
 
+        /// <inheritdoc/>
         public DatabaseImageElement UpdateScore(int id)
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
