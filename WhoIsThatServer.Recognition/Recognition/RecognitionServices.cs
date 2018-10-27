@@ -76,15 +76,12 @@ namespace WhoIsThatServer.Recognition.Recognition
         /// <returns>Name of identified person</returns>
         public async Task<string> Identify()
         {
-            //This is needed only for first time, left it for reference
-            //var isSuccessful = await CreateGroup();
-
             var azureBlobHelper = new AzureBlobHelper();
             string takenImageUri = null;
 
             takenImageUri = azureBlobHelper.GetImageUri("temp.jpg");
             if (takenImageUri == null)
-                throw new ArgumentException("Photo was not successfully taken!");
+                throw new ArgumentNullException();
 
             var memoryStream = new MemoryStream();
             memoryStream = RecUtil.GetStreamFromUri(takenImageUri);
@@ -92,14 +89,14 @@ namespace WhoIsThatServer.Recognition.Recognition
             var faces = await _faceServiceClient.DetectAsync(memoryStream);
 
             if (faces.Length == 0 || faces == null)
-                return "No faces were detected!";
+                throw new IndexOutOfRangeException();
 
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
-            
+
             if (results.Length == 0 || results == null || results[0].Candidates.Length == 0 || results[0].Candidates[0] == null)
-                return "No one was indetified!";
+                throw new ArgumentNullException();
 
             var candidateId = results[0].Candidates[0].PersonId;
             var person = await _faceServiceClient.GetPersonAsync(_groupId, candidateId);

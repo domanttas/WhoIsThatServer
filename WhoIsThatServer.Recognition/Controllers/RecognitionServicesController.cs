@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WhoIsThatServer.Recognition.ErrorMessages;
 using WhoIsThatServer.Recognition.Models;
 using WhoIsThatServer.Recognition.Recognition;
 
@@ -19,8 +20,21 @@ namespace WhoIsThatServer.Recognition.Controllers
         [Route("identify")]
         public async Task<JsonResult> InitiateRecognition()
         {
-            var temp = await RecognitionServices.Identify();
-            return Json(temp);
+            try
+            {
+                var temp = await RecognitionServices.Identify();
+                return Json(temp);
+            }
+
+            catch (IndexOutOfRangeException indexOutOfRangeException)
+            {
+                return Json(RecognitionErrorMessages.NoFacesFoundError);
+            }
+
+            catch (ArgumentNullException argumentNullException)
+            {
+                return Json(RecognitionErrorMessages.NoOneIdentifiedError);
+            }
         }
 
         [HttpPost]
