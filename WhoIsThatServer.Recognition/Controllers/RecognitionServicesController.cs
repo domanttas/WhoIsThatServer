@@ -41,8 +41,16 @@ namespace WhoIsThatServer.Recognition.Controllers
         [Route("insert")]
         public async Task<JsonResult> Post([FromBody] ImageModel imageModel)
         {
-            var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
-            return Json(result);
+            try
+            {
+                var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
+                return Json(result);
+            }
+
+            catch (ArgumentNullException argumentNullException)
+            {
+                return Json(RecognitionErrorMessages.PersonNotCreatedError);
+            }
         }
 
         [HttpGet]
