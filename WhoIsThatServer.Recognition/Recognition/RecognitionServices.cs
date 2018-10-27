@@ -73,7 +73,7 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             takenImageUri = azureBlobHelper.GetImageUri("temp.jpg");
             if (takenImageUri == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("image");
 
             var memoryStream = new MemoryStream();
             memoryStream = RecUtil.GetStreamFromUri(takenImageUri);
@@ -88,7 +88,7 @@ namespace WhoIsThatServer.Recognition.Recognition
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
 
             if (results.Length == 0 || results == null || results[0].Candidates.Length == 0 || results[0].Candidates[0] == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("face");
 
             var candidateId = results[0].Candidates[0].PersonId;
             var person = await _faceServiceClient.GetPersonAsync(_groupId, candidateId);

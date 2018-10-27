@@ -31,10 +31,15 @@ namespace WhoIsThatServer.Recognition.Controllers
                 return Json(RecognitionErrorMessages.NoFacesFoundError);
             }
 
-            catch (ArgumentNullException argumentNullException)
+            catch (ArgumentNullException imageArgumentNullException) when (imageArgumentNullException.Message.Contains("image"))
             {
                 return Json(RecognitionErrorMessages.NoOneIdentifiedError);
             }
+
+            catch (ArgumentNullException imageArgumentNullException) when (imageArgumentNullException.Message.Contains("face"))
+            {
+                return Json(RecognitionErrorMessages.NoOneIdentifiedError);
+            }  
         }
 
         [HttpPost]
