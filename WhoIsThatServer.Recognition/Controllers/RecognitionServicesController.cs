@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WhoIsThatServer.Recognition.ErrorMessages;
+using WhoIsThatServer.Recognition.Exceptions;
 using WhoIsThatServer.Recognition.Models;
 using WhoIsThatServer.Recognition.Recognition;
 
@@ -19,16 +21,43 @@ namespace WhoIsThatServer.Recognition.Controllers
         [Route("identify")]
         public async Task<JsonResult> InitiateRecognition()
         {
-            var temp = await RecognitionServices.Identify();
-            return Json(temp);
+            try
+            {
+                var temp = await RecognitionServices.Identify();
+                return Json(temp);
+            }
+
+            catch (ManagerException firstException) when (firstException.ErrorCode == RecognitionErrorMessages.NoFacesFoundError)
+            {
+                return Json(RecognitionErrorMessages.NoFacesFoundError);
+            }
+
+            catch (ManagerException secondException) when (secondException.ErrorCode == RecognitionErrorMessages.NoOneIdentifiedError)
+            {
+                return Json(RecognitionErrorMessages.NoOneIdentifiedError);
+            }
+
+            //Will change that to WrongUriError message when frontend side will be mapped to these codes
+            catch (ManagerException imageException) when (imageException.ErrorCode == RecognitionErrorMessages.WrongUriError)
+            {
+                return Json(RecognitionErrorMessages.NoOneIdentifiedError);
+            }  
         }
 
         [HttpPost]
         [Route("insert")]
         public async Task<JsonResult> Post([FromBody] ImageModel imageModel)
         {
-            var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
-            return Json(result);
+            try
+            {
+                var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
+                return Json(result);
+            }
+
+            catch (ManagerException noPersonCreatedException) when (noPersonCreatedException.ErrorCode == RecognitionErrorMessages.PersonNotCreatedError)
+            {
+                return Json(RecognitionErrorMessages.PersonNotCreatedError);
+            }
         }
 
         [HttpGet]

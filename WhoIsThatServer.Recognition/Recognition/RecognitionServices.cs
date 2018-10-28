@@ -9,6 +9,8 @@ using WhoIsThatServer.Recognition.Recognition.RecUtils;
 using WhoIsThatServer.Recognition.Helpers;
 using System.IO;
 using WhoIsThatServer.Recognition.Models;
+using WhoIsThatServer.Recognition.Exceptions;
+using WhoIsThatServer.Recognition.ErrorMessages;
 
 namespace WhoIsThatServer.Recognition.Recognition
 {
@@ -35,16 +37,8 @@ namespace WhoIsThatServer.Recognition.Recognition
         {
             var people = await _databaseController.GetImageObjects();
 
-            try
-            {
-                await _faceServiceClient.CreatePersonGroupAsync(_groupId, "fun");
-            }
-
-            catch (Exception exception)
-            {
-                throw new Exception(exception.Message);
-            }
-
+            await _faceServiceClient.CreatePersonGroupAsync(_groupId, "fun");
+            
             foreach (var person in people)
             {
                 CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, person.Id.ToString());
@@ -76,15 +70,12 @@ namespace WhoIsThatServer.Recognition.Recognition
         /// <returns>Name of identified person</returns>
         public async Task<string> Identify()
         {
-            //This is needed only for first time, left it for reference
-            //var isSuccessful = await CreateGroup();
-
             var azureBlobHelper = new AzureBlobHelper();
             string takenImageUri = null;
 
             takenImageUri = azureBlobHelper.GetImageUri("temp.jpg");
             if (takenImageUri == null)
-                throw new ArgumentException("Photo was not successfully taken!");
+                throw new ManagerException(RecognitionErrorMessages.WrongUriError);
 
             var memoryStream = new MemoryStream();
             memoryStream = RecUtil.GetStreamFromUri(takenImageUri);
@@ -92,14 +83,14 @@ namespace WhoIsThatServer.Recognition.Recognition
             var faces = await _faceServiceClient.DetectAsync(memoryStream);
 
             if (faces.Length == 0 || faces == null)
-                return "No faces were detected!";
+                throw new ManagerException(RecognitionErrorMessages.NoFacesFoundError);
 
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
-            
+
             if (results.Length == 0 || results == null || results[0].Candidates.Length == 0 || results[0].Candidates[0] == null)
-                return "No one was indetified!";
+                throw new ManagerException(RecognitionErrorMessages.NoOneIdentifiedError);
 
             var candidateId = results[0].Candidates[0].PersonId;
             var person = await _faceServiceClient.GetPersonAsync(_groupId, candidateId);
@@ -119,6 +110,9 @@ namespace WhoIsThatServer.Recognition.Recognition
         public async Task<bool> InsertPersonInToGroup(ImageModel imageModel)
         {
             CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, imageModel.Id.ToString());
+
+            if (result == null)
+                throw new ManagerException(RecognitionErrorMessages.PersonNotCreatedError);
 
             await _faceServiceClient.AddPersonFaceAsync(_groupId, result.PersonId, RecUtil.GetStreamFromUri(imageModel.ImageContentUri));
 
