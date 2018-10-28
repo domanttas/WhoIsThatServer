@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Helpers
@@ -57,14 +59,14 @@ namespace WhoIsThatServer.Storage.Helpers
 
                         return true;
                     }
+
+                    throw new ArgumentNullException();
                 }
 
                 catch(ArgumentNullException ex)
                 {
-                    return false;
+                    throw new ManagerException(StorageErrorMessages.TargetNotFoundError);
                 }
-
-                return false;
             }
         }
     }

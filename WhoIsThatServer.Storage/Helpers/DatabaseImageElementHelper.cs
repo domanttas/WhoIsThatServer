@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using WebGrease.Css;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Models;
 using WhoIsThatServer.Storage.Utils;
 
@@ -24,12 +26,12 @@ namespace WhoIsThatServer.Storage.Helpers
         {
             if (!Uri.IsWellFormedUriString(imageContentUri, UriKind.Absolute))
             {
-                throw new UriFormatException("Invalid URI of image");
+                throw new ManagerException(StorageErrorMessages.InvalidImageUriError);
             }
 
             if (!imageName.IsFileNameValid())
             {
-                throw new ArgumentException("Filename should be alphanumeric, may include -_.");
+                throw new ManagerException(StorageErrorMessages.InvalidFileNameError);
             }
             
             //Creates an element to insert into DB
@@ -79,16 +81,29 @@ namespace WhoIsThatServer.Storage.Helpers
 
                 if (elementToUpdate == null)
                 {
-                    return null;
+                    throw new ManagerException(StorageErrorMessages.UserDoesNotExistError);
                 }
 
-                else
+                elementToUpdate.Score++;
+                context.SaveChanges();
+
+                return elementToUpdate;
+            }
+        }
+
+        /// <inheritdoc/>
+        public DatabaseImageElement GetUserById(int id)
+        {
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                var user = context.DatabaseImageElements.Where(c => c.Id == id).SingleOrDefault();
+
+                if (user == null)
                 {
-                    elementToUpdate.Score++;
-                    context.SaveChanges();
-
-                    return elementToUpdate;
+                    throw new ManagerException(StorageErrorMessages.UserDoesNotExistError);
                 }
+
+                return user;
             }
         }
     }

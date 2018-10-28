@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
@@ -184,8 +186,8 @@ namespace WhoIsThatServer.Storage.UnitTests
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<ArgumentException>(() =>
-                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test", "t1", 1));
+            Assert.Throws<ManagerException>(() =>
+                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test", "t1", 1), StorageErrorMessages.InvalidImageUriError);
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
@@ -221,8 +223,8 @@ namespace WhoIsThatServer.Storage.UnitTests
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<UriFormatException>(() =>
-                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test", "t1", 1));
+            Assert.Throws<ManagerException>(() =>
+                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test", "t1", 1), StorageErrorMessages.InvalidImageUriError);
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
@@ -268,7 +270,7 @@ namespace WhoIsThatServer.Storage.UnitTests
         }
 
         [Test]
-        public void UpdateScore_WhenIdDoesNotExists_ShouldReturnNull()
+        public void UpdateScore_WhenIdDoesNotExists_ShouldThrow()
         {
             //Arrange
             var fakeIQueryable = new List<DatabaseImageElement>()
@@ -295,13 +297,95 @@ namespace WhoIsThatServer.Storage.UnitTests
 
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
+            //Act and assert
+            Assert.Throws<ManagerException>(() => databaseImageElementHelper.UpdateScore(9), StorageErrorMessages.TargetNotFoundError);
+            
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
+        }
+
+        [Test]
+        public void GetUserById_WhenIdDoesNotExists_ShouldThrow()
+        {
+            //Arrange
+            var fakeIQueryable = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement
+                {
+                    Id = 0,
+                    DescriptiveSentence = "t",
+                    ImageContentUri = "t",
+                    ImageName = "t",
+                    PersonFirstName = "t",
+                    PersonLastName = "t",
+                    Score = 0
+                }
+            }.AsQueryable();
+            
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeIQueryable);
+
+            var fakeDbContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDbContext.DatabaseImageElements).Returns(fakeDbSet);
+
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+
+            var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
+            
+            //Act and assert
+            Assert.Throws<ManagerException>(() => databaseImageElementHelper.GetUserById(9), StorageErrorMessages.UserDoesNotExistError);
+            
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
+        }
+
+        [Test]
+        public void GetUserById_WhenIdExists_ShouldReturn()
+        {
+            //Arrange
+            var expectedId = 0;
+            var expectedDescriptiveSentence = "t";
+            var expectedImageContentUri = "t";
+            var expectedImageName = "t";
+            var expectedPersonFirstName = "t";
+            var expectedPersonLastName = "t";
+            var expectedScore = 0;
+            
+            var fakeIQueryable = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement
+                {
+                    Id = expectedId,
+                    DescriptiveSentence = expectedDescriptiveSentence,
+                    ImageContentUri = expectedImageContentUri,
+                    ImageName = expectedImageName,
+                    PersonFirstName = expectedPersonFirstName,
+                    PersonLastName = expectedPersonLastName,
+                    Score = expectedScore
+                }
+            }.AsQueryable();
+            
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeIQueryable);
+
+            var fakeDbContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDbContext.DatabaseImageElements).Returns(fakeDbSet);
+
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+
+            var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
+            
             //Act
-            var result = databaseImageElementHelper.UpdateScore(9);
+            var result = databaseImageElementHelper.GetUserById(expectedId);
             
             //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
             
-            result.ShouldBe(null);
+            result.Id.ShouldBe(expectedId);
+            result.DescriptiveSentence.ShouldBe(expectedDescriptiveSentence);
+            result.ImageContentUri.ShouldBe(expectedImageContentUri);
+            result.ImageName.ShouldBe(expectedImageName);
+            result.PersonFirstName.ShouldBe(expectedPersonFirstName);
+            result.PersonLastName.ShouldBe(expectedPersonLastName);
+            result.Score.ShouldBe(expectedScore);
         }
     }
 }

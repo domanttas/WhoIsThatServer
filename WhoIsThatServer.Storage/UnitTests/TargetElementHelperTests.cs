@@ -4,6 +4,8 @@ using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
@@ -99,7 +101,7 @@ namespace WhoIsThatServer.Storage.UnitTests
         }
 
         [Test]
-        public void IsPreyHunter_WrongPreyGoodHunter_ShouldReturnFalse()
+        public void IsPreyHunter_WrongPreyGoodHunter_ShouldThrow()
         {
             //Arrange
             var fakeTargetsList = new List<TargetElement>()
@@ -127,17 +129,15 @@ namespace WhoIsThatServer.Storage.UnitTests
             var expectedHunterPersonId = 56;
             var expectedPreyPersonId = 102;
             
-            //Act
-            var result = targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId);
+            //Act and assert
+            Assert.Throws<ManagerException>(() =>
+                targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId), StorageErrorMessages.TargetNotFoundError);
             
-            //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
-            
-            result.ShouldBe(false);
         }
         
         [Test]
-        public void IsPreyHunter_GoodPreyWrongHunter_ShouldReturnFalse()
+        public void IsPreyHunter_GoodPreyWrongHunter_ShouldThrow()
         {
             //Arrange
             var fakeTargetsList = new List<TargetElement>()
@@ -165,13 +165,11 @@ namespace WhoIsThatServer.Storage.UnitTests
             var expectedHunterPersonId = 71;
             var expectedPreyPersonId = 57;
             
-            //Act
-            var result = targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId);
+            //Act and assert      
+            Assert.Throws<ManagerException>(() =>
+                targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId), StorageErrorMessages.TargetNotFoundError);
             
-            //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
-            
-            result.ShouldBe(false);
         }
     }
 }

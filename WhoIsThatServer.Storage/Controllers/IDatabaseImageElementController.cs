@@ -30,5 +30,12 @@ namespace WhoIsThatServer.Storage.Controllers
         /// <param name="databaseImageElement">Element for which score is updated</param>
         /// <returns>Updated element</returns>
         IHttpActionResult UpdateScore(DatabaseImageElement databaseImageElement);
+
+        /// <summary>
+        /// Gets user by ID
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns>User object</returns>
+        IHttpActionResult GetUserById(int id);
     }
 }

@@ -31,5 +31,12 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <param name="id">ID of user</param>
         /// <returns>Updated element</returns>
         DatabaseImageElement UpdateScore(int id);
+
+        /// <summary>
+        /// Gets user by ID
+        /// </summary>
+        /// <param name="id">ID of user</param>
+        /// <returns>User</returns>
+        DatabaseImageElement GetUserById(int id);
     }
 }

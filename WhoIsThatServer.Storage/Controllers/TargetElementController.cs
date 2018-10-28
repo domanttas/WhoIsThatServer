@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
@@ -19,7 +21,16 @@ namespace WhoIsThatServer.Storage.Controllers
         [Route("api/game/remove")]
         public IHttpActionResult IsPreyHunted([FromBody] TargetElement targetElement)
         {
-            return Json(TargetElementHelper.IsPreyHunted(targetElement.HunterPersonId, targetElement.PreyPersonId));
+            try
+            {
+                return Json(TargetElementHelper.IsPreyHunted(targetElement.HunterPersonId, targetElement.PreyPersonId));
+            }
+
+            catch (ManagerException targetNotFoundException) when (targetNotFoundException.ErrorCode ==
+                                                                   StorageErrorMessages.TargetNotFoundError)
+            {
+                return Json(StorageErrorMessages.TargetNotFoundError);
+            }
         }
 
         /// <inheritdoc/>
