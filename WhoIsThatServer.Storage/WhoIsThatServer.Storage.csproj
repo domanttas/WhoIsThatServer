@@ -261,6 +261,7 @@
     <Compile Include="Controllers\ITargetElementController.cs" />
     <Compile Include="Controllers\TargetElementController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="ErrorMessages\StorageErrorMessages.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
