@@ -68,5 +68,21 @@ namespace WhoIsThatServer.Storage.Controllers
                 return Json(StorageErrorMessages.UserDoesNotExistError);
             }
         }
+
+        [HttpGet]
+        [Route("api/images/user/{id}")]
+        public IHttpActionResult GetUserById(int id)
+        {
+            try
+            {
+                return Json(DatabaseImageElementHelper.GetUserById(id));
+            }
+
+            catch (ManagerException userNotFoundException) when (userNotFoundException.ErrorCode ==
+                                                                 StorageErrorMessages.UserDoesNotExistError)
+            {
+                return Json(StorageErrorMessages.UserDoesNotExistError);
+            }
+        }
     }
 }
