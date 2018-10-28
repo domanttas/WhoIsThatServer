@@ -29,11 +29,27 @@ namespace WhoIsThatServer.Storage.Controllers
         [Route("api/images/add")]
         public IHttpActionResult Post([FromBody] DatabaseImageElement databaseImageElement)
         {
-            databaseImageElement = DatabaseImageElementHelper.InsertNewImageElement(databaseImageElement.Id,
-                databaseImageElement.ImageName, databaseImageElement.ImageContentUri,
-                databaseImageElement.PersonFirstName, databaseImageElement.PersonLastName, databaseImageElement.DescriptiveSentence, databaseImageElement.Score);
+            try
+            {
+                databaseImageElement = DatabaseImageElementHelper.InsertNewImageElement(databaseImageElement.Id,
+                    databaseImageElement.ImageName, databaseImageElement.ImageContentUri,
+                    databaseImageElement.PersonFirstName, databaseImageElement.PersonLastName,
+                    databaseImageElement.DescriptiveSentence, databaseImageElement.Score);
 
-            return Json(databaseImageElement);
+                return Json(databaseImageElement);
+            }
+
+            catch (ManagerException wrongUriException) when (wrongUriException.ErrorCode ==
+                                                             StorageErrorMessages.InvalidImageUriError)
+            {
+                return Json(StorageErrorMessages.InvalidImageUriError);
+            }
+
+            catch (ManagerException wrongFilenameException) when (wrongFilenameException.ErrorCode ==
+                                                                  StorageErrorMessages.InvalidFileNameError)
+            {
+                return Json(StorageErrorMessages.InvalidFileNameError);
+            }
         }
 
         /// <inheritdoc/>

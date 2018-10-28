@@ -26,12 +26,12 @@ namespace WhoIsThatServer.Storage.Helpers
         {
             if (!Uri.IsWellFormedUriString(imageContentUri, UriKind.Absolute))
             {
-                throw new UriFormatException("Invalid URI of image");
+                throw new ManagerException(StorageErrorMessages.InvalidImageUriError);
             }
 
             if (!imageName.IsFileNameValid())
             {
-                throw new ArgumentException("Filename should be alphanumeric, may include -_.");
+                throw new ManagerException(StorageErrorMessages.InvalidFileNameError);
             }
             
             //Creates an element to insert into DB

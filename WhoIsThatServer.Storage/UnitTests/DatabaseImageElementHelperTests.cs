@@ -185,7 +185,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ManagerException>(() =>
                 databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test", "t1", 1));
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
@@ -222,7 +222,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<UriFormatException>(() =>
+            Assert.Throws<ManagerException>(() =>
                 databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test", "t1", 1));
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
