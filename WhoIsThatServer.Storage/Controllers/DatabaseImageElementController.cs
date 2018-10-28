@@ -69,6 +69,7 @@ namespace WhoIsThatServer.Storage.Controllers
             }
         }
 
+        /// <inheritdoc/>
         [HttpGet]
         [Route("api/images/user/{id}")]
         public IHttpActionResult GetUserById(int id)
