@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
 using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
@@ -186,7 +187,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Act and assert
             Assert.Throws<ManagerException>(() =>
-                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test", "t1", 1));
+                databaseImageElementHelper.InsertNewImageElement(1, "test@@", "https://whoisthatserverimages.blob.core.windows.test.net/images/Domantas_test.jpg", "test", "test", "t1", 1), StorageErrorMessages.InvalidImageUriError);
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
@@ -223,7 +224,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Act and assert
             Assert.Throws<ManagerException>(() =>
-                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test", "t1", 1));
+                databaseImageElementHelper.InsertNewImageElement(1, "test", "invalidURI", "test", "test", "t1", 1), StorageErrorMessages.InvalidImageUriError);
 
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustNotHaveHappened();
         }
@@ -297,7 +298,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<ManagerException>(() => databaseImageElementHelper.UpdateScore(9));
+            Assert.Throws<ManagerException>(() => databaseImageElementHelper.UpdateScore(9), StorageErrorMessages.TargetNotFoundError);
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
         }
@@ -331,7 +332,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<ManagerException>(() => databaseImageElementHelper.GetUserById(9));
+            Assert.Throws<ManagerException>(() => databaseImageElementHelper.GetUserById(9), StorageErrorMessages.UserDoesNotExistError);
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
         }

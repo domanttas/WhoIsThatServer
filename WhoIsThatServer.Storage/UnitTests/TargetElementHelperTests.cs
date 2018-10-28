@@ -4,6 +4,7 @@ using FakeItEasy;
 using NUnit.Framework;
 using Shouldly;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
 using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
@@ -130,7 +131,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Act and assert
             Assert.Throws<ManagerException>(() =>
-                targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId));
+                targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId), StorageErrorMessages.TargetNotFoundError);
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
         }
@@ -166,7 +167,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             //Act and assert      
             Assert.Throws<ManagerException>(() =>
-                targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId));
+                targetElementHelper.IsPreyHunted(expectedHunterPersonId, expectedPreyPersonId), StorageErrorMessages.TargetNotFoundError);
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
         }
