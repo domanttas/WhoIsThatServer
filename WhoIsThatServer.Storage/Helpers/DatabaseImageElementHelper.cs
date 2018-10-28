@@ -90,5 +90,21 @@ namespace WhoIsThatServer.Storage.Helpers
                 return elementToUpdate;
             }
         }
+
+        /// <inheritdoc/>
+        public DatabaseImageElement GetUserById(int id)
+        {
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                var user = context.DatabaseImageElements.Where(c => c.Id == id).SingleOrDefault();
+
+                if (user == null)
+                {
+                    throw new ManagerException(StorageErrorMessages.UserDoesNotExistError);
+                }
+
+                return user;
+            }
+        }
     }
 }
