@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WhoIsThatServer.Recognition.ErrorMessages;
+using WhoIsThatServer.Recognition.Exceptions;
 using WhoIsThatServer.Recognition.Models;
 using WhoIsThatServer.Recognition.Recognition;
 
@@ -26,17 +27,18 @@ namespace WhoIsThatServer.Recognition.Controllers
                 return Json(temp);
             }
 
-            catch (IndexOutOfRangeException indexOutOfRangeException)
+            catch (ManagerException firstException) when (firstException.ErrorCode == RecognitionErrorMessages.NoFacesFoundError)
             {
                 return Json(RecognitionErrorMessages.NoFacesFoundError);
             }
 
-            catch (ArgumentNullException imageArgumentNullException) when (imageArgumentNullException.Message.Contains("image"))
+            catch (ManagerException secondException) when (secondException.ErrorCode == RecognitionErrorMessages.NoOneIdentifiedError)
             {
                 return Json(RecognitionErrorMessages.NoOneIdentifiedError);
             }
 
-            catch (ArgumentNullException imageArgumentNullException) when (imageArgumentNullException.Message.Contains("face"))
+            //Will change that to WrongUriError message when frontend side will be mapped to these codes
+            catch (ManagerException imageException) when (imageException.ErrorCode == RecognitionErrorMessages.WrongUriError)
             {
                 return Json(RecognitionErrorMessages.NoOneIdentifiedError);
             }  
@@ -52,7 +54,7 @@ namespace WhoIsThatServer.Recognition.Controllers
                 return Json(result);
             }
 
-            catch (ArgumentNullException argumentNullException)
+            catch (ManagerException noPersonCreatedException) when (noPersonCreatedException.ErrorCode == RecognitionErrorMessages.PersonNotCreatedError)
             {
                 return Json(RecognitionErrorMessages.PersonNotCreatedError);
             }

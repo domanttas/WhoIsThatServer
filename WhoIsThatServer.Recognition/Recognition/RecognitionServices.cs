@@ -9,6 +9,8 @@ using WhoIsThatServer.Recognition.Recognition.RecUtils;
 using WhoIsThatServer.Recognition.Helpers;
 using System.IO;
 using WhoIsThatServer.Recognition.Models;
+using WhoIsThatServer.Recognition.Exceptions;
+using WhoIsThatServer.Recognition.ErrorMessages;
 
 namespace WhoIsThatServer.Recognition.Recognition
 {
@@ -73,7 +75,7 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             takenImageUri = azureBlobHelper.GetImageUri("temp.jpg");
             if (takenImageUri == null)
-                throw new ArgumentNullException("image");
+                throw new ManagerException(RecognitionErrorMessages.WrongUriError);
 
             var memoryStream = new MemoryStream();
             memoryStream = RecUtil.GetStreamFromUri(takenImageUri);
@@ -81,14 +83,14 @@ namespace WhoIsThatServer.Recognition.Recognition
             var faces = await _faceServiceClient.DetectAsync(memoryStream);
 
             if (faces.Length == 0 || faces == null)
-                throw new IndexOutOfRangeException();
+                throw new ManagerException(RecognitionErrorMessages.NoFacesFoundError);
 
             var faceIds = faces.Select(face => face.FaceId).ToArray();
 
             var results = await _faceServiceClient.IdentifyAsync(_groupId, faceIds);
 
             if (results.Length == 0 || results == null || results[0].Candidates.Length == 0 || results[0].Candidates[0] == null)
-                throw new ArgumentNullException("face");
+                throw new ManagerException(RecognitionErrorMessages.NoOneIdentifiedError);
 
             var candidateId = results[0].Candidates[0].PersonId;
             var person = await _faceServiceClient.GetPersonAsync(_groupId, candidateId);
@@ -110,7 +112,7 @@ namespace WhoIsThatServer.Recognition.Recognition
             CreatePersonResult result = await _faceServiceClient.CreatePersonAsync(_groupId, imageModel.Id.ToString());
 
             if (result == null)
-                throw new ArgumentNullException();
+                throw new ManagerException(RecognitionErrorMessages.PersonNotCreatedError);
 
             await _faceServiceClient.AddPersonFaceAsync(_groupId, result.PersonId, RecUtil.GetStreamFromUri(imageModel.ImageContentUri));
 
