@@ -59,14 +59,14 @@ namespace WhoIsThatServer.Storage.Helpers
 
                         return true;
                     }
+
+                    throw new ArgumentNullException();
                 }
 
                 catch(ArgumentNullException ex)
                 {
                     throw new ManagerException(StorageErrorMessages.TargetNotFoundError);
                 }
-
-                return false;
             }
         }
     }
