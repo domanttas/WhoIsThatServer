@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
@@ -39,7 +41,16 @@ namespace WhoIsThatServer.Storage.Controllers
         [Route("api/images/score")]
         public IHttpActionResult UpdateScore([FromBody] DatabaseImageElement databaseImageElement)
         {
-            return Json(DatabaseImageElementHelper.UpdateScore(databaseImageElement.Id));
+            try
+            {
+                return Json(DatabaseImageElementHelper.UpdateScore(databaseImageElement.Id));
+            }
+
+            catch (ManagerException userNotFoundException) when (userNotFoundException.ErrorCode ==
+                                                                 StorageErrorMessages.UserDoesNotExistError)
+            {
+                return Json(StorageErrorMessages.UserDoesNotExistError);
+            }
         }
     }
 }

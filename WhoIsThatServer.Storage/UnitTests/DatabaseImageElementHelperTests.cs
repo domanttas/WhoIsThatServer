@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
@@ -268,7 +269,7 @@ namespace WhoIsThatServer.Storage.UnitTests
         }
 
         [Test]
-        public void UpdateScore_WhenIdDoesNotExists_ShouldReturnNull()
+        public void UpdateScore_WhenIdDoesNotExists_ShouldThrow()
         {
             //Arrange
             var fakeIQueryable = new List<DatabaseImageElement>()
@@ -295,13 +296,10 @@ namespace WhoIsThatServer.Storage.UnitTests
 
             var databaseImageElementHelper = new DatabaseImageElementHelper(fakeDbContextGeneration);
             
-            //Act
-            var result = databaseImageElementHelper.UpdateScore(9);
+            //Act and assert
+            Assert.Throws<ManagerException>(() => databaseImageElementHelper.UpdateScore(9));
             
-            //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
-            
-            result.ShouldBe(null);
         }
     }
 }

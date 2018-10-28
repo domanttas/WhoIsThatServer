@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using WebGrease.Css;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Models;
 using WhoIsThatServer.Storage.Utils;
 
@@ -79,16 +81,13 @@ namespace WhoIsThatServer.Storage.Helpers
 
                 if (elementToUpdate == null)
                 {
-                    return null;
+                    throw new ManagerException(StorageErrorMessages.UserDoesNotExistError);
                 }
 
-                else
-                {
-                    elementToUpdate.Score++;
-                    context.SaveChanges();
+                elementToUpdate.Score++;
+                context.SaveChanges();
 
-                    return elementToUpdate;
-                }
+                return elementToUpdate;
             }
         }
     }
