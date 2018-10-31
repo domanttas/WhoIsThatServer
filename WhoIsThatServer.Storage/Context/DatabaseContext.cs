@@ -19,14 +19,13 @@ namespace WhoIsThatServer.Storage.Context
 
         }
 
-        /// <summary>
-        /// Stores information about database image element
-        /// </summary>
+        /// <inheritdoc/>
         public virtual DbSet<DatabaseImageElement> DatabaseImageElements { get; set; }
 
-        /// <summary>
-        /// Stores information about target and hunter
-        /// </summary>
+        /// <inheritdoc/>
         public virtual DbSet<TargetElement> TargetElements { get; set; }
+
+        /// <inheritdoc/>
+        public virtual DbSet<FaceFeaturesModel> FaceFeatures { get; set; }
     }
 }

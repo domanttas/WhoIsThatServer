@@ -255,9 +255,11 @@
     <Compile Include="Context\IDatabaseContextGeneration.cs" />
     <Compile Include="Controllers\AzureBlobController.cs" />
     <Compile Include="Controllers\DatabaseImageElementController.cs" />
+    <Compile Include="Controllers\FaceFeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IAzureBlobController.cs" />
     <Compile Include="Controllers\IDatabaseImageElementController.cs" />
+    <Compile Include="Controllers\IFaceFeaturesController.cs" />
     <Compile Include="Controllers\ITargetElementController.cs" />
     <Compile Include="Controllers\TargetElementController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -268,16 +270,21 @@
     </Compile>
     <Compile Include="Helpers\AzureBlobHelper.cs" />
     <Compile Include="Helpers\DatabaseImageElementHelper.cs" />
+    <Compile Include="Helpers\FaceFeaturesHelper.cs" />
     <Compile Include="Helpers\IDatabaseImageElementHelper.cs" />
+    <Compile Include="Helpers\IFaceFeaturesHelper.cs" />
     <Compile Include="Helpers\ITargetElementHelper.cs" />
     <Compile Include="Helpers\TargetElementHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Models\DatabaseImageElement.cs" />
+    <Compile Include="Models\FaceFeaturesModel.cs" />
     <Compile Include="Models\TargetElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
+    <Compile Include="UnitTests\FaceFeaturesControllerTests.cs" />
+    <Compile Include="UnitTests\FaceFeaturesHelperTests.cs" />
     <Compile Include="UnitTests\RegexTests.cs" />
     <Compile Include="UnitTests\TargetElementControllerTests.cs" />
     <Compile Include="UnitTests\TargetElementHelperTests.cs" />
