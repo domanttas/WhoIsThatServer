@@ -16,7 +16,7 @@ namespace WhoIsThatServer.Storage.Controllers
 
         /// <inheritdoc/>
         [HttpPost]
-        [Route("api/features/add")]
+        [Route("api/features")]
         public IHttpActionResult Post([FromBody] FaceFeaturesModel faceFeaturesModel)
         {
             return Json(FaceFeaturesHelper.InsertNewFeaturesModel(faceFeaturesModel.PersonId, faceFeaturesModel.Age, faceFeaturesModel.Gender));
@@ -24,7 +24,7 @@ namespace WhoIsThatServer.Storage.Controllers
 
         /// <inheritdoc/>
         [HttpGet]
-        [Route("api/features/get/{id}")]
+        [Route("api/features/{id}")]
         public IHttpActionResult GetFeatureById(int id)
         {
             try

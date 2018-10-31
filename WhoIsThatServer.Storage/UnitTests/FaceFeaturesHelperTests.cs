@@ -17,7 +17,16 @@ namespace WhoIsThatServer.Storage.UnitTests
         public void InsertNewFeaturesModel_ShouldReturn()
         {
             //Arrange
-            var fakeFeaturesList = new List<FaceFeaturesModel>();
+            var fakeFeaturesList = new List<FaceFeaturesModel>()
+            {
+                new FaceFeaturesModel()
+                {
+                    Id = 1,
+                    Age = 30,
+                    Gender = "male",
+                    PersonId = 5
+                }
+            };
             var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeFeaturesList.AsQueryable());
 
             var fakeDbContext = A.Fake<DatabaseContext>();
@@ -28,7 +37,6 @@ namespace WhoIsThatServer.Storage.UnitTests
 
             var faceFeaturesHelper = new FaceFeaturesHelper(fakeDbContextGeneration);
             
-            var expectedId = 0;
             var expectedPersonId = 1;
             var expectedAge = 20;
             var expectedGender = "male";
@@ -41,7 +49,6 @@ namespace WhoIsThatServer.Storage.UnitTests
             A.CallTo(() => fakeDbSet.Add(result)).MustHaveHappenedOnceExactly();
             A.CallTo(() => fakeDbContext.SaveChanges()).MustHaveHappenedOnceExactly();
             
-            result.Id.ShouldBe(expectedId);
             result.PersonId.ShouldBe(expectedPersonId);
             result.Age.ShouldBe(expectedAge);
             result.Gender.ShouldBe(expectedGender);
