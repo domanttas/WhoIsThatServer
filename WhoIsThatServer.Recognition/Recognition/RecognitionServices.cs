@@ -133,5 +133,30 @@ namespace WhoIsThatServer.Recognition.Recognition
 
             return true;
         }
+
+        /// <summary>
+        /// Detects features of face
+        /// </summary>
+        /// <param name="imageModel">Object which is sent from frontend</param>
+        /// <returns>Age, gender of face and whether glasses and facialhair are present</returns>
+        public async Task<Face[]> DetectFeaturesOfFace(ImageModel imageModel)
+        {
+            try
+            {
+                var faces = await _faceServiceClient.DetectAsync(RecUtil.GetStreamFromUri(imageModel.ImageContentUri), false, true, new FaceAttributeType[] {
+                    FaceAttributeType.Age,
+                    FaceAttributeType.Gender,
+                    FaceAttributeType.Glasses,
+                    FaceAttributeType.FacialHair
+                });
+
+                return faces.ToArray();
+            }
+
+            catch (Exception exception)
+            {
+                throw new ManagerException(RecognitionErrorMessages.NoFacesFoundError);
+            }
+        }
     }
 }
