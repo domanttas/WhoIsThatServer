@@ -9,7 +9,7 @@ using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Helpers
 {
-    public class FaceFeaturesHelper
+    public class FaceFeaturesHelper : IFaceFeaturesHelper
     {
         private IDatabaseContextGeneration _databaseContextGeneration;
 
