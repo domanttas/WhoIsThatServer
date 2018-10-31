@@ -56,5 +56,47 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             jsonContent.ShouldBe(expectedJson);
         }
+
+        [Test]
+        public async Task GetFeatureById_ShouldCallHelper()
+        {
+            //Arrange
+            var expectedId = 0;
+            var expectedPersonId = 1;
+            var expectedAge = 20;
+            var expectedGender = "male";
+
+            var expectedFeaturesElement = new FaceFeaturesModel()
+            {
+                Id = expectedId,
+                PersonId = expectedPersonId,
+                Age = expectedAge,
+                Gender = expectedGender
+            };
+
+            var fakeFaceFeaturesHelper = A.Fake<IFaceFeaturesHelper>();
+
+            A.CallTo(() => fakeFaceFeaturesHelper.GetFaceFeaturesByPersonId(expectedPersonId)).Returns(expectedFeaturesElement);
+            
+            var faceFeaturesController = new FaceFeaturesController()
+            {
+                FaceFeaturesHelper = fakeFaceFeaturesHelper,
+                Request = new HttpRequestMessage()
+            };
+            
+            //Act
+            var result = faceFeaturesController.GetFeatureById(expectedPersonId);
+            
+            //Assert
+            A.CallTo(() => fakeFaceFeaturesHelper.GetFaceFeaturesByPersonId(expectedPersonId))
+                .MustHaveHappenedOnceExactly();
+            
+            var httpResponse = await result.ExecuteAsync(new CancellationToken());
+            var jsonContent = await httpResponse.Content.ReadAsStringAsync();
+
+            var expectedJson = JsonConvert.SerializeObject(expectedFeaturesElement);
+            
+            jsonContent.ShouldBe(expectedJson);
+        }
     }
 }
