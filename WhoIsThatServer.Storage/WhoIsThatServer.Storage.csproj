@@ -283,6 +283,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
+    <Compile Include="UnitTests\FaceFeaturesControllerTests.cs" />
     <Compile Include="UnitTests\FaceFeaturesHelperTests.cs" />
     <Compile Include="UnitTests\RegexTests.cs" />
     <Compile Include="UnitTests\TargetElementControllerTests.cs" />
