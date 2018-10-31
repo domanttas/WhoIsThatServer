@@ -274,6 +274,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AzureBlob.cs" />
     <Compile Include="Models\DatabaseImageElement.cs" />
+    <Compile Include="Models\FaceFeaturesModel.cs" />
     <Compile Include="Models\TargetElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\DatabaseImageElementControllerTests.cs" />
