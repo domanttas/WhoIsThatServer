@@ -145,9 +145,7 @@ namespace WhoIsThatServer.Recognition.Recognition
             {
                 var faces = await _faceServiceClient.DetectAsync(RecUtil.GetStreamFromUri(imageModel.ImageContentUri), false, true, new FaceAttributeType[] {
                     FaceAttributeType.Age,
-                    FaceAttributeType.Gender,
-                    FaceAttributeType.Glasses,
-                    FaceAttributeType.FacialHair
+                    FaceAttributeType.Gender
                 });
 
                 return faces.ToArray();
