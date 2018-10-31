@@ -16,7 +16,7 @@ namespace WhoIsThatServer.Recognition.Controllers
     {
         public RecognitionServices RecognitionServices { get; set; } = new RecognitionServices();
 
-        //////<inheritdoc/>
+        ///<inheritdoc/>
         [HttpGet]
         [Route("identify")]
         public async Task<JsonResult> InitiateRecognition()
@@ -44,6 +44,7 @@ namespace WhoIsThatServer.Recognition.Controllers
             }  
         }
 
+        ///<inheritdoc/>
         [HttpPost]
         [Route("insert")]
         public async Task<JsonResult> Post([FromBody] ImageModel imageModel)
@@ -60,6 +61,7 @@ namespace WhoIsThatServer.Recognition.Controllers
             }
         }
 
+        ///<inheritdoc/>
         [HttpGet]
         [Route("create")]
         public async Task<JsonResult> Create()
@@ -67,6 +69,7 @@ namespace WhoIsThatServer.Recognition.Controllers
             return Json(await RecognitionServices.CreateGroup());
         }
 
+        ///<inheritdoc/>
         [HttpGet]
         [Route("detect")]
         public async Task<JsonResult> DetectFeaturesOfFace([FromBody] ImageModel imageModel)
