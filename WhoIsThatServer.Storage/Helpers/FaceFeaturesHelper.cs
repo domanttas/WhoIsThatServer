@@ -19,6 +19,7 @@ namespace WhoIsThatServer.Storage.Helpers
             _databaseContextGeneration = databaseContextGeneration ?? new DatabaseContextGeneration();
         }
 
+        /// <inheritdoc/>
         public FaceFeaturesModel InsertNewFeaturesModel(int personId, int age, string gender)
         {
             var element = new FaceFeaturesModel()
@@ -37,6 +38,7 @@ namespace WhoIsThatServer.Storage.Helpers
             return element;
         }
 
+        /// <inheritdoc/>
         public FaceFeaturesModel GetFaceFeaturesByPersonId(int id)
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())

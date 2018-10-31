@@ -10,10 +10,11 @@ using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Controllers
 {
-    public class FaceFeaturesController : ApiController
+    public class FaceFeaturesController : ApiController, IFaceFeaturesController
     {
         public IFaceFeaturesHelper FaceFeaturesHelper { get; set; } = new FaceFeaturesHelper();
 
+        /// <inheritdoc/>
         [HttpPost]
         [Route("api/features/add")]
         public IHttpActionResult Post([FromBody] FaceFeaturesModel faceFeaturesModel)
@@ -21,6 +22,7 @@ namespace WhoIsThatServer.Storage.Controllers
             return Json(FaceFeaturesHelper.InsertNewFeaturesModel(faceFeaturesModel.PersonId, faceFeaturesModel.Age, faceFeaturesModel.Gender));
         }
 
+        /// <inheritdoc/>
         [HttpGet]
         [Route("api/features/get/{id}")]
         public IHttpActionResult GetFeatureById(int id)
