@@ -153,7 +153,7 @@ namespace WhoIsThatServer.Recognition.Recognition
                 return faces.ToArray();
             }
 
-            catch (Exception exception)
+            catch (ArgumentNullException exception)
             {
                 throw new ManagerException(RecognitionErrorMessages.NoFacesFoundError);
             }
