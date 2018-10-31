@@ -66,5 +66,21 @@ namespace WhoIsThatServer.Recognition.Controllers
         {
             return Json(await RecognitionServices.CreateGroup());
         }
+
+        [HttpGet]
+        [Route("detect")]
+        public async Task<JsonResult> DetectFeaturesOfFace([FromBody] ImageModel imageModel)
+        {
+            try
+            {
+                var result = await RecognitionServices.DetectFeaturesOfFace(imageModel);
+                return Json(result);
+            }
+
+            catch (ManagerException noFacesFoundError) when (noFacesFoundError.ErrorCode == RecognitionErrorMessages.NoFacesFoundError)
+            {
+                return Json(RecognitionErrorMessages.NoFacesFoundError);
+            }
+        }
     }
 }
