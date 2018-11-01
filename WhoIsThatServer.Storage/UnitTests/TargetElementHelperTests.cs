@@ -171,5 +171,70 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
         }
+
+        [Test]
+        public void AssignRandomTarget_ShouldReturnAssignedId()
+        {
+            //Arrange
+            var expectedPreyId = 2;
+            var expectedHunterId = 10;
+            
+            var dbElementsList = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement()
+                {
+                    Id = expectedPreyId,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                },
+                
+                new DatabaseImageElement()
+                {
+                    Id = expectedPreyId,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                }
+            };
+
+            var fakeDbSetImageElements = UnitTestsUtil.SetupFakeDbSet(dbElementsList.AsQueryable());
+            var fakeDbSetTargetElements = UnitTestsUtil.SetupFakeDbSet(new List<TargetElement>().AsQueryable());
+            
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDatabaseContext.DatabaseImageElements).Returns(fakeDbSetImageElements);
+            A.CallTo(() => fakeDatabaseContext.TargetElements).Returns(fakeDbSetTargetElements);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+
+            var databaseElementHelper = A.Fake<IDatabaseImageElementHelper>();
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration, databaseElementHelper);
+
+            A.CallTo(() => databaseElementHelper.GetAllImages()).Returns(dbElementsList);
+            
+            //Act
+            var result = targetElementHelper.AssignRandomTarget(expectedHunterId);
+            
+            //Assert
+            result.ShouldBe(expectedPreyId);
+            
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+        }
+
+        [Test]
+        public void AssignRandomTarget_ShouldThrow_TargetAlreadyAssigned()
+        {
+            //Arrange
+            
+        }
     }
 }

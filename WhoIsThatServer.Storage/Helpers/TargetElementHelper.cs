@@ -93,10 +93,10 @@ namespace WhoIsThatServer.Storage.Helpers
                 {
                     var index = hunterPersonId;
 
-                    while (users.ElementAt(index).Id == hunterPersonId)
+                    do
                     {
                         index = random.Next(0, users.Count());
-                    }
+                    } while (users.ElementAt(index).Id == hunterPersonId);
 
                     var result = InsertNewTargetElement(0, hunterPersonId, users.ElementAt(index).Id);
 
