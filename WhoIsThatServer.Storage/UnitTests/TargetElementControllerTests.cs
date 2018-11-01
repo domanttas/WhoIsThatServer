@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -93,6 +94,61 @@ namespace WhoIsThatServer.Storage.UnitTests
             var jsonContent = await httpResponse.Content.ReadAsStringAsync();
 
             var expectedJson = JsonConvert.SerializeObject(false);
+            
+            jsonContent.ShouldBe(expectedJson);
+        }
+
+        [Test]
+        public async Task AssignRandomTarget_ShouldCallHelper()
+        {
+            //Arrange
+            var expectedPreyId = 2;
+            var expectedHunterId = 10;
+            
+            var dbElementsList = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement()
+                {
+                    Id = expectedPreyId,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                },
+                
+                new DatabaseImageElement()
+                {
+                    Id = expectedPreyId,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                }
+            };
+
+            var fakeTargetElementHelper = A.Fake<ITargetElementHelper>();
+            A.CallTo(() => fakeTargetElementHelper.AssignRandomTarget(expectedHunterId)).Returns(expectedPreyId);
+            
+            var targetElementController = new TargetElementController()
+            {
+                TargetElementHelper = fakeTargetElementHelper,
+                Request = new HttpRequestMessage()
+            };
+            
+            //Act
+            var result = targetElementController.AssignRandomTarget(expectedHunterId);
+            
+            //Assert
+            A.CallTo(() => fakeTargetElementHelper.AssignRandomTarget(expectedHunterId)).MustHaveHappenedOnceExactly();
+            
+            var httpResponse = await result.ExecuteAsync(new CancellationToken());
+            var jsonContent = await httpResponse.Content.ReadAsStringAsync();
+
+            var expectedJson = JsonConvert.SerializeObject(expectedPreyId);
             
             jsonContent.ShouldBe(expectedJson);
         }
