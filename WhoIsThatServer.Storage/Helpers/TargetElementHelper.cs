@@ -97,7 +97,9 @@ namespace WhoIsThatServer.Storage.Helpers
                         index = random.Next(0, users.Count());
                     }
 
-                    return users.ElementAt(index).Id;
+                    var result = InsertNewTargetElement(0, hunterPersonId, users.ElementAt(index).Id);
+
+                    return result.PreyPersonId;
                 }
 
                 catch(ArgumentNullException argumentNullException)
