@@ -139,7 +139,7 @@ namespace WhoIsThatServer.Recognition.Recognition
         /// </summary>
         /// <param name="imageModel">Object which is sent from frontend</param>
         /// <returns>Age, gender of face and whether glasses and facialhair are present</returns>
-        public async Task<Face[]> DetectFeaturesOfFace(ImageModel imageModel)
+        public async Task<FaceFeaturesModel> DetectFeaturesOfFace(ImageModel imageModel)
         {
             try
             {
@@ -148,10 +148,20 @@ namespace WhoIsThatServer.Recognition.Recognition
                     FaceAttributeType.Gender
                 });
 
-                return faces.ToArray();
+                return new FaceFeaturesModel()
+                {
+                    PersonId = imageModel.Id,
+                    Age = Convert.ToInt32(faces.ElementAt(0).FaceAttributes.Age),
+                    Gender = faces.ElementAt(0).FaceAttributes.Gender
+                };
             }
 
-            catch (ArgumentNullException exception)
+            catch (ArgumentNullException argumentNullException)
+            {
+                throw new ManagerException(RecognitionErrorMessages.NoFacesFoundError);
+            }
+
+            catch (ArgumentOutOfRangeException outOfRangeException)
             {
                 throw new ManagerException(RecognitionErrorMessages.NoFacesFoundError);
             }
