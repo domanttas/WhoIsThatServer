@@ -72,6 +72,7 @@ namespace WhoIsThatServer.Storage.Helpers
             }
         }
 
+        /// <inheritdoc/>
         public int AssignRandomTarget(int hunterPersonId)
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())

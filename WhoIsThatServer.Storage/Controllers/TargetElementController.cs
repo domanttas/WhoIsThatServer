@@ -42,5 +42,31 @@ namespace WhoIsThatServer.Storage.Controllers
 
             return Json(targetElement);
         }
+
+        /// <inheritdoc/>
+        [HttpPost]
+        [Route("api/game/{id}")]
+        public IHttpActionResult AssignRandomTarget(int id)
+        {
+            try
+            {
+                return Json(TargetElementHelper.AssignRandomTarget(id));
+            }
+
+            catch (ManagerException targetExistsException) when (targetExistsException.ErrorCode == StorageErrorMessages.TargetAlreadyAssignedError)
+            {
+                return Json(StorageErrorMessages.TargetAlreadyAssignedError);
+            }
+
+            catch (ManagerException noPlayersException) when (noPlayersException.ErrorCode == StorageErrorMessages.ThereAreNoPlayersError)
+            {
+                return Json(StorageErrorMessages.ThereAreNoPlayersError);
+            }
+
+            catch (ManagerException targetNotAssignedException) when (targetNotAssignedException.ErrorCode == StorageErrorMessages.TargetNotAssignedError)
+            {
+                return Json(StorageErrorMessages.TargetNotAssignedError);
+            }
+        }
     }
 }
