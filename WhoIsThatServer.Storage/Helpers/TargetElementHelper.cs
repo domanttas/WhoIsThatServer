@@ -87,7 +87,7 @@ namespace WhoIsThatServer.Storage.Helpers
                 if (users.Count() < 2)
                     throw new ManagerException(StorageErrorMessages.ThereAreNoPlayersError);
 
-                Random random = new Random();
+                var random = new Random();
 
                 try
                 {
