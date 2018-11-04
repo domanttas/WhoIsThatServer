@@ -42,13 +42,13 @@ namespace WhoIsThatServer.Storage.Controllers
             catch (ManagerException wrongUriException) when (wrongUriException.ErrorCode ==
                                                              StorageErrorMessages.InvalidImageUriError)
             {
-                return Json(StorageErrorMessages.InvalidImageUriError);
+                return BadRequest(StorageErrorMessages.InvalidImageUriError);
             }
 
             catch (ManagerException wrongFilenameException) when (wrongFilenameException.ErrorCode ==
                                                                   StorageErrorMessages.InvalidFileNameError)
             {
-                return Json(StorageErrorMessages.InvalidFileNameError);
+                return BadRequest(StorageErrorMessages.InvalidFileNameError);
             }
         }
 
@@ -65,7 +65,7 @@ namespace WhoIsThatServer.Storage.Controllers
             catch (ManagerException userNotFoundException) when (userNotFoundException.ErrorCode ==
                                                                  StorageErrorMessages.UserDoesNotExistError)
             {
-                return Json(StorageErrorMessages.UserDoesNotExistError);
+                return BadRequest(StorageErrorMessages.UserDoesNotExistError);
             }
         }
 
@@ -82,7 +82,7 @@ namespace WhoIsThatServer.Storage.Controllers
             catch (ManagerException userNotFoundException) when (userNotFoundException.ErrorCode ==
                                                                  StorageErrorMessages.UserDoesNotExistError)
             {
-                return Json(StorageErrorMessages.UserDoesNotExistError);
+                return BadRequest(StorageErrorMessages.UserDoesNotExistError);
             }
         }
     }
