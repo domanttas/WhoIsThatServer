@@ -171,5 +171,140 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
         }
+
+        [Test]
+        public void AssignRandomTarget_ShouldReturnAssignedId()
+        {
+            //Arrange
+            var expectedPreyId = 2;
+            var expectedHunterId = 10;
+            
+            var dbElementsList = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement()
+                {
+                    Id = expectedPreyId,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                },
+                
+                new DatabaseImageElement()
+                {
+                    Id = expectedPreyId,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                }
+            };
+
+            var fakeDbSetImageElements = UnitTestsUtil.SetupFakeDbSet(dbElementsList.AsQueryable());
+            var fakeDbSetTargetElements = UnitTestsUtil.SetupFakeDbSet(new List<TargetElement>().AsQueryable());
+            
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDatabaseContext.DatabaseImageElements).Returns(fakeDbSetImageElements);
+            A.CallTo(() => fakeDatabaseContext.TargetElements).Returns(fakeDbSetTargetElements);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+
+            var databaseElementHelper = A.Fake<IDatabaseImageElementHelper>();
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration, databaseElementHelper);
+
+            A.CallTo(() => databaseElementHelper.GetAllImages()).Returns(dbElementsList);
+            
+            //Act
+            var result = targetElementHelper.AssignRandomTarget(expectedHunterId);
+            
+            //Assert
+            result.ShouldBe(expectedPreyId);
+            
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+        }
+
+        [Test]
+        public void AssignRandomTarget_ShouldThrow_TargetAlreadyAssigned()
+        {
+            //Arrange
+            var targetsList = new List<TargetElement>()
+            {
+                new TargetElement()
+                {
+                    Id = 1,
+                    HunterPersonId = 2,
+                    PreyPersonId = 3,
+                    IsHunted = false
+                }
+            }.AsQueryable();
+
+            var fakeTargetsDbSet = UnitTestsUtil.SetupFakeDbSet(targetsList);
+            
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDatabaseContext.TargetElements).Returns(fakeTargetsDbSet);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+            
+            var databaseElementHelper = A.Fake<IDatabaseImageElementHelper>();
+            
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration, databaseElementHelper);
+            
+            //Act and assert
+            Assert.Throws<ManagerException>(() => targetElementHelper.AssignRandomTarget(2),
+                StorageErrorMessages.TargetAlreadyAssignedError);
+            
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+        }
+
+        [Test]
+        public void AssignRandomTarget_ShouldThrow_NoPlayers()
+        {
+            //Arrange
+            var dbElementsList = new List<DatabaseImageElement>()
+            {
+                new DatabaseImageElement()
+                {
+                    Id = 1,
+                    DescriptiveSentence = "test",
+                    ImageContentUri = "test",
+                    ImageName = "test",
+                    PersonFirstName = "test",
+                    PersonLastName = "test",
+                    Score = 1
+                }
+            };
+            
+            var fakeDbSetImageElements = UnitTestsUtil.SetupFakeDbSet(dbElementsList.AsQueryable());
+            var fakeDbSetTargetElements = UnitTestsUtil.SetupFakeDbSet(new List<TargetElement>().AsQueryable());
+            
+            var fakeDatabaseContext = A.Fake<DatabaseContext>();
+            A.CallTo(() => fakeDatabaseContext.DatabaseImageElements).Returns(fakeDbSetImageElements);
+            A.CallTo(() => fakeDatabaseContext.TargetElements).Returns(fakeDbSetTargetElements);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext())
+                .Returns(fakeDatabaseContext);
+
+            var databaseElementHelper = A.Fake<IDatabaseImageElementHelper>();
+
+            A.CallTo(() => databaseElementHelper.GetAllImages()).Returns(fakeDbSetImageElements);
+            
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration, databaseElementHelper);
+            
+            //Act and assert
+            Assert.Throws<ManagerException>(() => targetElementHelper.AssignRandomTarget(10),
+                StorageErrorMessages.ThereAreNoPlayersError);
+            
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
+        }
     }
 }

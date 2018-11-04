@@ -23,5 +23,12 @@ namespace WhoIsThatServer.Storage.Controllers
         /// <param name="targetElement">Object with ids</param>
         /// <returns>Boolean as Json</returns>
         IHttpActionResult IsPreyHunted(TargetElement targetElement);
+
+        /// <summary>
+        /// Assigns random target
+        /// </summary>
+        /// <param name="id">ID of hunter</param>
+        /// <returns>Assigned prey's ID</returns>
+        IHttpActionResult AssignRandomTarget(int id);
     }
 }

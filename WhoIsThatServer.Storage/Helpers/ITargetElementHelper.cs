@@ -26,5 +26,12 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <param name="preyPersonId">ID of target</param>
         /// <returns>Boolean</returns>
         bool IsPreyHunted(int hunterPersonId, int preyPersonId);
+
+        /// <summary>
+        /// Assigns random target
+        /// </summary>
+        /// <param name="hunterPersonId">Id for hunter</param>
+        /// <returns>Assigned target's ID</returns>
+        int AssignRandomTarget(int hunterPersonId);
     }
 }
