@@ -35,7 +35,7 @@ namespace WhoIsThatServer.Storage.Controllers
 
             catch (ManagerException featureNotFoundException) when (featureNotFoundException.ErrorCode == StorageErrorMessages.UserDoesNotExistError)
             {
-                return Json(StorageErrorMessages.UserDoesNotExistError);
+                return BadRequest(StorageErrorMessages.UserDoesNotExistError);
             }
         }
     }

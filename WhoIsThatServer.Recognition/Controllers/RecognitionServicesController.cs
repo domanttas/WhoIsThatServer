@@ -19,70 +19,70 @@ namespace WhoIsThatServer.Recognition.Controllers
         ///<inheritdoc/>
         [HttpGet]
         [Route("identify")]
-        public async Task<JsonResult> InitiateRecognition()
+        public async Task<ActionResult> InitiateRecognition()
         {
             try
             {
                 var temp = await RecognitionServices.Identify();
-                return Json(temp);
+                return Ok(temp);
             }
 
             catch (ManagerException firstException) when (firstException.ErrorCode == RecognitionErrorMessages.NoFacesFoundError)
             {
-                return Json(RecognitionErrorMessages.NoFacesFoundError);
+                return BadRequest(RecognitionErrorMessages.NoFacesFoundError);
             }
 
             catch (ManagerException secondException) when (secondException.ErrorCode == RecognitionErrorMessages.NoOneIdentifiedError)
             {
-                return Json(RecognitionErrorMessages.NoOneIdentifiedError);
+                return BadRequest(RecognitionErrorMessages.NoOneIdentifiedError);
             }
 
             //Will change that to WrongUriError message when frontend side will be mapped to these codes
             catch (ManagerException imageException) when (imageException.ErrorCode == RecognitionErrorMessages.WrongUriError)
             {
-                return Json(RecognitionErrorMessages.NoOneIdentifiedError);
+                return BadRequest(RecognitionErrorMessages.NoOneIdentifiedError);
             }  
         }
 
         ///<inheritdoc/>
         [HttpPost]
         [Route("insert")]
-        public async Task<JsonResult> Post([FromBody] ImageModel imageModel)
+        public async Task<ActionResult> Post([FromBody] ImageModel imageModel)
         {
             try
             {
                 var result = await RecognitionServices.InsertPersonInToGroup(imageModel);
-                return Json(result);
+                return Ok(result);
             }
 
             catch (ManagerException noPersonCreatedException) when (noPersonCreatedException.ErrorCode == RecognitionErrorMessages.PersonNotCreatedError)
             {
-                return Json(RecognitionErrorMessages.PersonNotCreatedError);
+                return BadRequest(RecognitionErrorMessages.PersonNotCreatedError);
             }
         }
 
         ///<inheritdoc/>
         [HttpGet]
         [Route("create")]
-        public async Task<JsonResult> Create()
+        public async Task<ActionResult> Create()
         {
-            return Json(await RecognitionServices.CreateGroup());
+            return Ok(await RecognitionServices.CreateGroup());
         }
 
         ///<inheritdoc/>
         [HttpGet]
         [Route("detect")]
-        public async Task<JsonResult> DetectFeaturesOfFace([FromBody] ImageModel imageModel)
+        public async Task<ActionResult> DetectFeaturesOfFace([FromBody] ImageModel imageModel)
         {
             try
             {
                 var result = await RecognitionServices.DetectFeaturesOfFace(imageModel);
-                return Json(result);
+                return Ok(result);
             }
 
             catch (ManagerException noFacesFoundError) when (noFacesFoundError.ErrorCode == RecognitionErrorMessages.NoFacesFoundError)
             {
-                return Json(RecognitionErrorMessages.NoFacesFoundError);
+                return BadRequest(RecognitionErrorMessages.NoFacesFoundError);
             }
         }
     }
