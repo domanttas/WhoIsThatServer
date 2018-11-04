@@ -29,7 +29,7 @@ namespace WhoIsThatServer.Storage.Controllers
             catch (ManagerException targetNotFoundException) when (targetNotFoundException.ErrorCode ==
                                                                    StorageErrorMessages.TargetNotFoundError)
             {
-                return Json(StorageErrorMessages.TargetNotFoundError);
+                return BadRequest(StorageErrorMessages.TargetNotFoundError);
             }
         }
 
@@ -55,17 +55,17 @@ namespace WhoIsThatServer.Storage.Controllers
 
             catch (ManagerException targetExistsException) when (targetExistsException.ErrorCode == StorageErrorMessages.TargetAlreadyAssignedError)
             {
-                return Json(StorageErrorMessages.TargetAlreadyAssignedError);
+                return BadRequest(StorageErrorMessages.TargetAlreadyAssignedError);
             }
 
             catch (ManagerException noPlayersException) when (noPlayersException.ErrorCode == StorageErrorMessages.ThereAreNoPlayersError)
             {
-                return Json(StorageErrorMessages.ThereAreNoPlayersError);
+                return BadRequest(StorageErrorMessages.ThereAreNoPlayersError);
             }
 
             catch (ManagerException targetNotAssignedException) when (targetNotAssignedException.ErrorCode == StorageErrorMessages.TargetNotAssignedError)
             {
-                return Json(StorageErrorMessages.TargetNotAssignedError);
+                return BadRequest(StorageErrorMessages.TargetAlreadyAssignedError);
             }
         }
     }
