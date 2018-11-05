@@ -152,5 +152,46 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             jsonContent.ShouldBe(expectedJson);
         }
+
+        [Test]
+        public async Task GetTargetById_ShouldCallHelper()
+        {
+            //Arrange
+            var expectedId = 1;
+            var expectedHunterPersonId = 5;
+            var expectedPreyPersonId = 6;
+            var expectedIsHunted = false;
+
+            var expectedTargetElement = new TargetElement()
+            {
+                Id = expectedId,
+                HunterPersonId = expectedHunterPersonId,
+                PreyPersonId = expectedPreyPersonId
+            };
+            
+            var fakeTargetElementHelper = A.Fake<ITargetElementHelper>();
+            A.CallTo(() => fakeTargetElementHelper.GetTargetByUserId(expectedHunterPersonId))
+                .Returns(expectedTargetElement);
+            
+            var targetElementController = new TargetElementController()
+            {
+                TargetElementHelper = fakeTargetElementHelper,
+                Request = new HttpRequestMessage()
+            };
+            
+            //Act
+            var result = targetElementController.GetTargetById(expectedHunterPersonId);
+            
+            //Assert
+            A.CallTo(() => fakeTargetElementHelper.GetTargetByUserId(expectedHunterPersonId))
+                .MustHaveHappenedOnceExactly();
+            
+            var httpResponse = await result.ExecuteAsync(new CancellationToken());
+            var jsonContent = await httpResponse.Content.ReadAsStringAsync();
+
+            var expectedJson = JsonConvert.SerializeObject(expectedTargetElement);
+            
+            jsonContent.ShouldBe(expectedJson);
+        }
     }
 }
