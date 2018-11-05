@@ -33,5 +33,12 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <param name="hunterPersonId">Id for hunter</param>
         /// <returns>Assigned target's ID</returns>
         int AssignRandomTarget(int hunterPersonId);
+
+        /// <summary>
+        /// Gets target object by hunter ID
+        /// </summary>
+        /// <param name="hunterPersonId">ID of hunter</param>
+        /// <returns>Target object</returns>
+        TargetElement GetTargetByUserId(int hunterPersonId);
     }
 }

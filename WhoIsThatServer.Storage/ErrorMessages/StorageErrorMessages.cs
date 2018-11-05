@@ -15,5 +15,7 @@ namespace WhoIsThatServer.Storage.ErrorMessages
         public const string TargetNotAssignedError = "Target was not assigned";
 
         public const string ThereAreNoPlayersError = "There are no other players";
+
+        public const string TargetNotPresentAtLaunchError = "Target not found";
     }
 }

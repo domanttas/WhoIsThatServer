@@ -68,5 +68,22 @@ namespace WhoIsThatServer.Storage.Controllers
                 return BadRequest(StorageErrorMessages.TargetAlreadyAssignedError);
             }
         }
+
+        /// <inheritdoc/>
+        [HttpGet]
+        [Route("api/game/element/{id}")]
+        public IHttpActionResult GetTargetById(int id)
+        {
+            try
+            {
+                return Json(TargetElementHelper.GetTargetByUserId(id));
+            }
+
+            catch (ManagerException targetException) when (targetException.ErrorCode ==
+                                                           StorageErrorMessages.TargetNotPresentAtLaunchError)
+            {
+                return BadRequest(StorageErrorMessages.TargetNotPresentAtLaunchError);
+            }
+        }
     }
 }

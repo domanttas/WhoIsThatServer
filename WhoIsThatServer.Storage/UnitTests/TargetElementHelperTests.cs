@@ -306,5 +306,84 @@ namespace WhoIsThatServer.Storage.UnitTests
             
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
         }
+
+        [Test]
+        public void GetTargetById_ShouldReturnExcepted()
+        {
+            //Arrange
+            var expectedId = 0;
+            var expectedHunterId = 1;
+            var expectedPreyId = 2;
+            var expectedBoolean = false;
+
+            var fakeIQueryable = new List<TargetElement>()
+            {
+                new TargetElement()
+                {
+                    Id = expectedId,
+                    HunterPersonId = expectedHunterId,
+                    PreyPersonId = expectedPreyId,
+                    IsHunted = expectedBoolean
+                }
+            }.AsQueryable();
+            
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeIQueryable);
+
+            var fakeDbContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDbContext.TargetElements).Returns(fakeDbSet);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+            
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration);
+            
+            //Act
+            var result = targetElementHelper.GetTargetByUserId(expectedHunterId);
+            
+            //Assert
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappenedOnceExactly();
+            
+            result.Id.ShouldBe(expectedId);
+            result.HunterPersonId.ShouldBe(expectedHunterId);
+            result.PreyPersonId.ShouldBe(expectedPreyId);
+            result.IsHunted.ShouldBe(expectedBoolean);
+        }
+
+        [Test]
+        public void GetTargetById_ShouldThrow()
+        {
+            //Arrange
+            var expectedId = 0;
+            var expectedHunterId = 1;
+            var expectedPreyId = 2;
+            var expectedBoolean = false;
+
+            var fakeIQueryable = new List<TargetElement>()
+            {
+                new TargetElement()
+                {
+                    Id = expectedId,
+                    HunterPersonId = expectedHunterId,
+                    PreyPersonId = expectedPreyId,
+                    IsHunted = expectedBoolean
+                }
+            }.AsQueryable();
+            
+            var fakeDbSet = UnitTestsUtil.SetupFakeDbSet(fakeIQueryable);
+
+            var fakeDbContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDbContext.TargetElements).Returns(fakeDbSet);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+            
+            var targetElementHelper = new TargetElementHelper(fakeDbContextGeneration);
+            
+            //Act and assert
+            Assert.Throws<ManagerException>(() => targetElementHelper.GetTargetByUserId(500),
+                StorageErrorMessages.TargetNotPresentAtLaunchError);
+        }
     }
 }
