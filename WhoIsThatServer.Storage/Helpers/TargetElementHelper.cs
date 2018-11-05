@@ -114,5 +114,21 @@ namespace WhoIsThatServer.Storage.Helpers
                 }
             }
         }
+
+        /// <inheritdoc/>
+        public TargetElement GetTargetByUserId(int hunterPersonId)
+        {
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                var user = context.TargetElements.Where(c => c.HunterPersonId == hunterPersonId).SingleOrDefault();
+
+                if (user == null)
+                {
+                    throw new ManagerException(StorageErrorMessages.TargetNotPresentAtLaunchError);
+                }
+
+                return user;
+            }
+        }
     }
 }
