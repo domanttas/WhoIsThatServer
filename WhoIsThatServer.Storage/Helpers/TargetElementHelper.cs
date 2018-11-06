@@ -100,7 +100,7 @@ namespace WhoIsThatServer.Storage.Helpers
 
                     var result = InsertNewTargetElement(0, hunterPersonId, users.ElementAt(index).Id);
 
-                    return result.PreyPersonId;
+                    return users.ElementAt(index).Id;
                 }
 
                 catch(ArgumentNullException argumentNullException)
