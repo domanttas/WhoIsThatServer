@@ -44,7 +44,7 @@ namespace WhoIsThatServer.Storage.Controllers
         }
 
         /// <inheritdoc/>
-        [HttpPost]
+        [HttpGet]
         [Route("api/game/{id}")]
         public IHttpActionResult AssignRandomTarget(int id)
         {
