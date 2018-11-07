@@ -136,7 +136,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             };
             
             //Act
-            var result = databaseImageElementController.UpdateScore(expectedElement);
+            var result = databaseImageElementController.UpdateScore(expectedElement.Id);
             
             //Assert
             A.CallTo(() => fakeDatabaseImageElementHelper.UpdateScore(expectedElement.Id))

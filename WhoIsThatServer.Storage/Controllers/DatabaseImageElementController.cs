@@ -54,12 +54,12 @@ namespace WhoIsThatServer.Storage.Controllers
 
         /// <inheritdoc/>
         [HttpPut]
-        [Route("api/images/score")]
-        public IHttpActionResult UpdateScore([FromBody] DatabaseImageElement databaseImageElement)
+        [Route("api/images/score/{id}")]
+        public IHttpActionResult UpdateScore(int id)
         {
             try
             {
-                return Json(DatabaseImageElementHelper.UpdateScore(databaseImageElement.Id));
+                return Json(DatabaseImageElementHelper.UpdateScore(id));
             }
 
             catch (ManagerException userNotFoundException) when (userNotFoundException.ErrorCode ==
