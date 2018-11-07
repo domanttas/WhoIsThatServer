@@ -53,7 +53,7 @@ namespace WhoIsThatServer.Storage.Controllers
         }
 
         /// <inheritdoc/>
-        [HttpPut]
+        [HttpGet]
         [Route("api/images/score/{id}")]
         public IHttpActionResult UpdateScore(int id)
         {
