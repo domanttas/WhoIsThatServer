@@ -17,7 +17,7 @@ namespace WhoIsThatServer.Storage.Controllers
         public IDatabaseContextGeneration DatabaseContextGeneration { get; set; } = new DatabaseContextGeneration();
 
         /// <inheritdoc/>
-        [HttpDelete]
+        [HttpPost]
         [Route("api/game/remove")]
         public IHttpActionResult IsPreyHunted([FromBody] TargetElement targetElement)
         {
