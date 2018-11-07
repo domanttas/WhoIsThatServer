@@ -77,17 +77,17 @@ namespace WhoIsThatServer.Storage.Helpers
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
             {
-                var elementToUpdate = context.DatabaseImageElements.Where(c => c.Id == id).SingleOrDefault();
+                var elementToUpdate = context.DatabaseImageElements.Where(c => c.Id == id).ToList();
 
-                if (elementToUpdate == null)
+                if (elementToUpdate.Count != 1)
                 {
                     throw new ManagerException(StorageErrorMessages.UserDoesNotExistError);
                 }
 
-                elementToUpdate.Score++;
+                elementToUpdate.ElementAt(0).Score++;
                 context.SaveChanges();
 
-                return elementToUpdate;
+                return elementToUpdate.ElementAt(0);
             }
         }
 
