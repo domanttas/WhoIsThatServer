@@ -70,7 +70,7 @@ namespace WhoIsThatServer.Recognition.Controllers
         }
 
         ///<inheritdoc/>
-        [HttpGet]
+        [HttpPost]
         [Route("detect")]
         public async Task<ActionResult> DetectFeaturesOfFace([FromBody] ImageModel imageModel)
         {
