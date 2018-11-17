@@ -36,8 +36,8 @@ namespace WhoIsThatServer.Storage.Controllers
         }
 
         /// <inheritdoc/>
-        [HttpPut]
-        [Route("api/history/{userId}")]
+        [HttpGet]
+        [Route("api/history/update/{userId}")]
         public IHttpActionResult UpdateHistoryElement(int userId)
         {
             try
