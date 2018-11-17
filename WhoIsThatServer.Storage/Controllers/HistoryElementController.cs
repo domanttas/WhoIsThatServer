@@ -34,5 +34,22 @@ namespace WhoIsThatServer.Storage.Controllers
                 return BadRequest(StorageErrorMessages.HistoryElementNotFoundError);
             }
         }
+
+        /// <inheritdoc/>
+        [HttpPut]
+        [Route("api/history/{userId}")]
+        public IHttpActionResult UpdateHistoryElement(int userId)
+        {
+            try
+            {
+                return Json(HistoryModelHelper.UpdateHistoryModel(userId));
+            }
+
+            catch (ManagerException userDoesNotExistsError) when (userDoesNotExistsError.ErrorCode ==
+                                                                  StorageErrorMessages.UserDoesNotExistError)
+            {
+                return BadRequest(StorageErrorMessages.UserDoesNotExistError);
+            }
+        }
     }
 }

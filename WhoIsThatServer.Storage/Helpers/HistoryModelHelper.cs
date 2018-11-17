@@ -1,4 +1,5 @@
 using System.Linq;
+using WhoIsThatServer.Storage.Constants;
 using WhoIsThatServer.Storage.Context;
 using WhoIsThatServer.Storage.ErrorMessages;
 using WhoIsThatServer.Storage.Exceptions;
@@ -48,6 +49,25 @@ namespace WhoIsThatServer.Storage.Helpers
                 }
 
                 return historyModel;
+            }
+        }
+
+        /// <inheritdoc/>
+        public HistoryModel UpdateHistoryModel(int userId)
+        {
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                var element = context.History.Where(c => c.UserId == userId).ToList();
+
+                if (element.Count != 1)
+                {
+                    throw new ManagerException(StorageErrorMessages.UserDoesNotExistError);
+                }
+
+                element.ElementAt(0).Status = StatusConstants.TargetHuntedHistory;
+                context.SaveChanges();
+
+                return element.ElementAt(0);
             }
         }
     }

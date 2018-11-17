@@ -18,5 +18,12 @@ namespace WhoIsThatServer.Storage.Controllers
         /// <param name="userId">User ID</param>
         /// <returns>History model</returns>
         IHttpActionResult GetElementById(int userId);
+
+        /// <summary>
+        /// Updates history element
+        /// </summary>
+        /// <param name="userId">User id</param>
+        /// <returns>Updated element</returns>
+        IHttpActionResult UpdateHistoryElement(int userId);
     }
 }

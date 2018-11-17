@@ -19,5 +19,12 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <param name="userId">ID of user</param>
         /// <returns>HistoryModel element</returns>
         HistoryModel GetHistoryByUserId(int userId);
+
+        /// <summary>
+        /// Updates status of model
+        /// </summary>
+        /// <param name="userId">ID of user</param>
+        /// <returns>Updated model</returns>
+        HistoryModel UpdateHistoryModel(int userId);
     }
 }
