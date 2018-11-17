@@ -17,5 +17,7 @@ namespace WhoIsThatServer.Storage.ErrorMessages
         public const string ThereAreNoPlayersError = "There are no other players";
 
         public const string TargetNotPresentAtLaunchError = "Target not found";
+
+        public const string HistoryElementNotFoundError = "History was not found";
     }
 }

@@ -1,4 +1,7 @@
+using System.Linq;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Helpers
@@ -35,7 +38,17 @@ namespace WhoIsThatServer.Storage.Helpers
         /// <inheritdoc/>
         public HistoryModel GetHistoryByUserId(int userId)
         {
-            throw new System.NotImplementedException();
+            using (var context = _databaseContextGeneration.BuildDatabaseContext())
+            {
+                var historyModel = context.History.Where(c => c.UserId == userId).SingleOrDefault();
+
+                if (historyModel == null)
+                {
+                    throw new ManagerException(StorageErrorMessages.HistoryElementNotFoundError);
+                }
+
+                return historyModel;
+            }
         }
     }
 }
