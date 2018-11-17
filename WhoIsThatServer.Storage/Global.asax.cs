@@ -28,6 +28,7 @@ namespace WhoIsThatServer.Storage
             DatabaseImageElementController test = new DatabaseImageElementController();
             HttpClient client = new HttpClient();
 
+            /*
             string firstTest = azureBlobController.GetImageUri("Domantas_test_2.jpg");
             DatabaseImageElement databaseImageElement = new DatabaseImageElement()
             {
@@ -61,6 +62,7 @@ namespace WhoIsThatServer.Storage
             //string restUrl = "https://testrecognition.azurewebsites.net/api/recognitionservices/create";
             //HttpResponseMessage response = await client.GetAsync(
             //    restUrl);
+            */
         }
     }
 }
