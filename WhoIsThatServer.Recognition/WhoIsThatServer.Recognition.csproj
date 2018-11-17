@@ -14,11 +14,15 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.Face" Version="1.0.2-preview" />
     <PackageReference Include="Microsoft.ProjectOxford.Face.DotNetCore" Version="1.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NUnit" Version="3.11.0" />
-    <PackageReference Include="Shouldly" Version="3.0.1" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WhoIsThatServer.Storage\WhoIsThatServer.Storage.csproj" />
   </ItemGroup>
 
   <ItemGroup>
