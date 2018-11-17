@@ -291,6 +291,7 @@
     <Compile Include="UnitTests\DatabaseImageElementHelperTests.cs" />
     <Compile Include="UnitTests\FaceFeaturesControllerTests.cs" />
     <Compile Include="UnitTests\FaceFeaturesHelperTests.cs" />
+    <Compile Include="UnitTests\HistoryElementControllerTests.cs" />
     <Compile Include="UnitTests\HistoryModelHelperTests.cs" />
     <Compile Include="UnitTests\RegexTests.cs" />
     <Compile Include="UnitTests\TargetElementControllerTests.cs" />
