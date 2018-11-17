@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -72,7 +73,10 @@ namespace WhoIsThatServer.Storage.UnitTests
             };
             
             var fakeHistoryModelHelper = A.Fake<IHistoryModelHelper>();
-            A.CallTo(() => fakeHistoryModelHelper.GetHistoryByUserId(expectedUserId)).Returns(expectedElement);
+            A.CallTo(() => fakeHistoryModelHelper.GetHistoryByUserId(expectedUserId)).Returns(new List<HistoryModel>()
+            {
+                expectedElement
+            });
             
             var historyElementController = new HistoryElementController()
             {

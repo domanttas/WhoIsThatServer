@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using WhoIsThatServer.Storage.Constants;
 using WhoIsThatServer.Storage.Context;
@@ -37,11 +38,11 @@ namespace WhoIsThatServer.Storage.Helpers
         }
 
         /// <inheritdoc/>
-        public HistoryModel GetHistoryByUserId(int userId)
+        public IEnumerable<HistoryModel> GetHistoryByUserId(int userId)
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
             {
-                var historyModel = context.History.Where(c => c.UserId == userId).SingleOrDefault();
+                var historyModel = context.History.Where(c => c.UserId == userId).ToList();
 
                 if (historyModel == null)
                 {

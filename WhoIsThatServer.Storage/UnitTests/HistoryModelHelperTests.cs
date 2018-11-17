@@ -90,9 +90,9 @@ namespace WhoIsThatServer.Storage.UnitTests
             //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
             
-            result.UserId.ShouldBe(expectedUserId);
-            result.TargetId.ShouldBe(expectedTargetId);
-            result.Status.ShouldBe(expectedStatus);
+            result.ElementAt(0).UserId.ShouldBe(expectedUserId);
+            result.ElementAt(0).TargetId.ShouldBe(expectedTargetId);
+            result.ElementAt(0).Status.ShouldBe(expectedStatus);
         }
 
         [Test]

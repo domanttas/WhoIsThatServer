@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using WhoIsThatServer.Storage.Models;
 
 namespace WhoIsThatServer.Storage.Helpers
@@ -18,7 +19,7 @@ namespace WhoIsThatServer.Storage.Helpers
         /// </summary>
         /// <param name="userId">ID of user</param>
         /// <returns>HistoryModel element</returns>
-        HistoryModel GetHistoryByUserId(int userId);
+        IEnumerable<HistoryModel> GetHistoryByUserId(int userId);
 
         /// <summary>
         /// Updates status of model
