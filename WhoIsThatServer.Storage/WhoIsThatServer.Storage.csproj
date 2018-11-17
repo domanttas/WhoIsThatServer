@@ -257,10 +257,12 @@
     <Compile Include="Controllers\AzureBlobController.cs" />
     <Compile Include="Controllers\DatabaseImageElementController.cs" />
     <Compile Include="Controllers\FaceFeaturesController.cs" />
+    <Compile Include="Controllers\HistoryElementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IAzureBlobController.cs" />
     <Compile Include="Controllers\IDatabaseImageElementController.cs" />
     <Compile Include="Controllers\IFaceFeaturesController.cs" />
+    <Compile Include="Controllers\IHistoryElementController.cs" />
     <Compile Include="Controllers\ITargetElementController.cs" />
     <Compile Include="Controllers\TargetElementController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
