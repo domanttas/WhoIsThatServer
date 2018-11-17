@@ -5,6 +5,8 @@ using NUnit.Framework;
 using Shouldly;
 using WhoIsThatServer.Storage.Constants;
 using WhoIsThatServer.Storage.Context;
+using WhoIsThatServer.Storage.ErrorMessages;
+using WhoIsThatServer.Storage.Exceptions;
 using WhoIsThatServer.Storage.Helpers;
 using WhoIsThatServer.Storage.Models;
 
@@ -91,6 +93,39 @@ namespace WhoIsThatServer.Storage.UnitTests
             result.UserId.ShouldBe(expectedUserId);
             result.TargetId.ShouldBe(expectedTargetId);
             result.Status.ShouldBe(expectedStatus);
+        }
+
+        [Test]
+        public void GetHistoryByUserId_ShouldThrow()
+        {
+            //Arrange
+            var expectedUserId = 1;
+            var expectedTargetId = 2;
+            var expectedStatus = StatusConstants.TargetHuntedHistory;
+
+            var fakeHistoryList = new List<HistoryModel>()
+            {
+                new HistoryModel()
+                {
+                    UserId = expectedUserId,
+                    TargetId = expectedTargetId,
+                    Status = expectedStatus
+                }
+            }.AsQueryable();
+            
+            var fakeDbSetHistoryElements = UnitTestsUtil.SetupFakeDbSet(fakeHistoryList.AsQueryable());
+            var fakeDbContext = A.Fake<DatabaseContext>();
+
+            A.CallTo(() => fakeDbContext.History).Returns(fakeDbSetHistoryElements);
+            
+            var fakeDbContextGeneration = A.Fake<IDatabaseContextGeneration>();
+            A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).Returns(fakeDbContext);
+            
+            var historyModelHelper = new HistoryModelHelper(fakeDbContextGeneration);
+
+            //Act and assert
+            Assert.Throws<ManagerException>(() => historyModelHelper.GetHistoryByUserId(500),
+                StorageErrorMessages.HistoryElementNotFoundError);
         }
     }
 }
