@@ -272,8 +272,10 @@
     <Compile Include="Helpers\AzureBlobHelper.cs" />
     <Compile Include="Helpers\DatabaseImageElementHelper.cs" />
     <Compile Include="Helpers\FaceFeaturesHelper.cs" />
+    <Compile Include="Helpers\HistoryModelHelper.cs" />
     <Compile Include="Helpers\IDatabaseImageElementHelper.cs" />
     <Compile Include="Helpers\IFaceFeaturesHelper.cs" />
+    <Compile Include="Helpers\IHistoryModelHelper.cs" />
     <Compile Include="Helpers\ITargetElementHelper.cs" />
     <Compile Include="Helpers\TargetElementHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
