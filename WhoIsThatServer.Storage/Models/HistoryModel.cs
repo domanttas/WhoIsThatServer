@@ -6,6 +6,11 @@ namespace WhoIsThatServer.Storage.Models
     public class HistoryModel
     {
         /// <summary>
+        /// Primary key
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// ID of user
         /// </summary>
         public int UserId { get; set; }

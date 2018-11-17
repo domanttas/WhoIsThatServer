@@ -11,7 +11,7 @@ namespace WhoIsThatServer.Storage.Context
     public class DatabaseContext : DbContext, IDatabaseContext
     {
         /// <inheritdoc />
-        public DatabaseContext() : base(CloudConfigurationManager.GetSetting("DbConnectionString"))
+        public DatabaseContext() : base("Data Source = teststorageserverdbserver.database.windows.net; Initial Catalog = TestStorageServer_db; User ID = sqladmin; Password=Vs8rTr3k;Connect Timeout = 30; Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
         {
 
         }
