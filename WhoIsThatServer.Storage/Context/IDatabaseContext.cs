@@ -23,5 +23,10 @@ namespace WhoIsThatServer.Storage.Context
         /// Stores information about one's face features
         /// </summary>
         DbSet<FaceFeaturesModel> FaceFeatures { get; set; }
+        
+        /// <summary>
+        /// Stores information about target's history
+        /// </summary>
+        DbSet<HistoryModel> History { get; set; }
     }
 }

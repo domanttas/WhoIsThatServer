@@ -24,5 +24,8 @@ namespace WhoIsThatServer.Storage.Context
 
         /// <inheritdoc/>
         public virtual DbSet<FaceFeaturesModel> FaceFeatures { get; set; }
+        
+        /// <inheritdoc/>
+        public virtual DbSet<HistoryModel> History { get; set; }
     }
 }
