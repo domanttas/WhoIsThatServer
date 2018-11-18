@@ -44,21 +44,16 @@ namespace WhoIsThatServer.Storage.Helpers
             {
                 var historyModel = context.History.Where(c => c.UserId == userId).ToList();
 
-                if (historyModel == null)
-                {
-                    throw new ManagerException(StorageErrorMessages.HistoryElementNotFoundError);
-                }
-
                 return historyModel;
             }
         }
 
         /// <inheritdoc/>
-        public HistoryModel UpdateHistoryModel(int userId)
+        public HistoryModel UpdateHistoryModel(int userId, int targetId)
         {
             using (var context = _databaseContextGeneration.BuildDatabaseContext())
             {
-                var element = context.History.Where(c => c.UserId == userId).ToList();
+                var element = context.History.Where(c => c.UserId == userId && c.TargetId == targetId && c.Status == StatusConstants.TargetNotHuntedHistory).ToList();
 
                 if (element.Count != 1)
                 {

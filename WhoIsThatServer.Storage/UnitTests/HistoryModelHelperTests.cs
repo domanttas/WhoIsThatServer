@@ -160,7 +160,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             var historyModelHelper = new HistoryModelHelper(fakeDbContextGeneration);
             
             //Act
-            var result = historyModelHelper.UpdateHistoryModel(expectedUserId);
+            var result = historyModelHelper.UpdateHistoryModel(expectedUserId, expectedTargetId);
             
             //Assert
             A.CallTo(() => fakeDbContextGeneration.BuildDatabaseContext()).MustHaveHappened();
@@ -199,7 +199,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             var historyModelHelper = new HistoryModelHelper(fakeDbContextGeneration);
             
             //Act and assert
-            Assert.Throws<ManagerException>(() => historyModelHelper.UpdateHistoryModel(500),
+            Assert.Throws<ManagerException>(() => historyModelHelper.UpdateHistoryModel(500, 300),
                 StorageErrorMessages.UserDoesNotExistError);
         }
     }

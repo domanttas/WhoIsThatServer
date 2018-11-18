@@ -26,6 +26,6 @@ namespace WhoIsThatServer.Storage.Helpers
         /// </summary>
         /// <param name="userId">ID of user</param>
         /// <returns>Updated model</returns>
-        HistoryModel UpdateHistoryModel(int userId);
+        HistoryModel UpdateHistoryModel(int userId, int targetId);
     }
 }

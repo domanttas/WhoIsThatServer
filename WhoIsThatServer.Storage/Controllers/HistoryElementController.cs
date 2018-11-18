@@ -23,26 +23,17 @@ namespace WhoIsThatServer.Storage.Controllers
         [Route("api/history/{userId}")]
         public IHttpActionResult GetElementById(int userId)
         {
-            try
-            {
-                return Json(HistoryModelHelper.GetHistoryByUserId(userId));
-            }
-
-            catch (ManagerException historyNotFoundException) when (historyNotFoundException.ErrorCode ==
-                                                                    StorageErrorMessages.HistoryElementNotFoundError)
-            {
-                return BadRequest(StorageErrorMessages.HistoryElementNotFoundError);
-            }
+            return Json(HistoryModelHelper.GetHistoryByUserId(userId));
         }
 
         /// <inheritdoc/>
         [HttpGet]
-        [Route("api/history/update/{userId}")]
-        public IHttpActionResult UpdateHistoryElement(int userId)
+        [Route("api/history/update/{userId}/{targetId}")]
+        public IHttpActionResult UpdateHistoryElement(int userId, int targetId)
         {
             try
             {
-                return Json(HistoryModelHelper.UpdateHistoryModel(userId));
+                return Json(HistoryModelHelper.UpdateHistoryModel(userId, targetId));
             }
 
             catch (ManagerException userDoesNotExistsError) when (userDoesNotExistsError.ErrorCode ==

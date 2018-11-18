@@ -115,7 +115,7 @@ namespace WhoIsThatServer.Storage.UnitTests
             };
             
             var fakeHistoryModelHelper = A.Fake<IHistoryModelHelper>();
-            A.CallTo(() => fakeHistoryModelHelper.UpdateHistoryModel(expectedUserId)).Returns(expectedElement);
+            A.CallTo(() => fakeHistoryModelHelper.UpdateHistoryModel(expectedUserId, expectedTargetId)).Returns(expectedElement);
             
             var historyElementController = new HistoryElementController()
             {
@@ -124,10 +124,10 @@ namespace WhoIsThatServer.Storage.UnitTests
             };
             
             //Act
-            var result = historyElementController.UpdateHistoryElement(expectedUserId);
+            var result = historyElementController.UpdateHistoryElement(expectedUserId, expectedTargetId);
             
             //Assert
-            A.CallTo(() => fakeHistoryModelHelper.UpdateHistoryModel(expectedUserId)).MustHaveHappened();
+            A.CallTo(() => fakeHistoryModelHelper.UpdateHistoryModel(expectedUserId, expectedTargetId)).MustHaveHappened();
             
             var httpResponse = await result.ExecuteAsync(new CancellationToken());
             var jsonContent = await httpResponse.Content.ReadAsStringAsync();
