@@ -18,12 +18,12 @@ namespace WhoIsThatServer.Recognition.Controllers
 
         ///<inheritdoc/>
         [HttpGet]
-        [Route("identify")]
-        public async Task<ActionResult> InitiateRecognition()
+        [Route("identify/{name}")]
+        public async Task<ActionResult> InitiateRecognition(string name)
         {
             try
             {
-                var temp = await RecognitionServices.Identify();
+                var temp = await RecognitionServices.Identify(name);
                 return Ok(temp);
             }
 

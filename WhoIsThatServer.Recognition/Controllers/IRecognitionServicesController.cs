@@ -13,7 +13,7 @@ namespace WhoIsThatServer.Recognition.Controllers
         /// Calls method responsible for image recognition in RecognitionServices
         /// </summary>
         /// <returns>Name of detected person</returns>
-        Task<ActionResult> InitiateRecognition();
+        Task<ActionResult> InitiateRecognition(string name);
 
         /// <summary>
         /// Inserts person into person group

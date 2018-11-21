@@ -68,12 +68,12 @@ namespace WhoIsThatServer.Recognition.Recognition
         /// Identifies person from temporary image taken from App
         /// </summary>
         /// <returns>Name of identified person</returns>
-        public async Task<string> Identify()
+        public async Task<string> Identify(string name)
         {
             var azureBlobHelper = new AzureBlobHelper();
             string takenImageUri = null;
 
-            takenImageUri = azureBlobHelper.GetImageUri("temp.jpg");
+            takenImageUri = azureBlobHelper.GetImageUri(name);
             if (takenImageUri == null)
                 throw new ManagerException(RecognitionErrorMessages.WrongUriError);
 
@@ -95,7 +95,7 @@ namespace WhoIsThatServer.Recognition.Recognition
             var candidateId = results[0].Candidates[0].PersonId;
             var person = await _faceServiceClient.GetPersonAsync(_groupId, candidateId);
 
-            azureBlobHelper.DeletePhoto("temp.jpg");
+            azureBlobHelper.DeletePhoto(name);
 
             return person.Name;
         }
